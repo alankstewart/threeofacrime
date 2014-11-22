@@ -1,6 +1,5 @@
 package alankstewart.threeofacrime;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -19,12 +18,11 @@ public class SuspectCardGenerator implements Iterable<SuspectCard> {
         return new SuspectCardIterator();
     }
 
-    public int combination(int n, int k) {
+    public static int combination(int n, int k) {
         return factorial(n) / (factorial(k) * factorial(n - k));
     }
 
-    private int factorial(int n) {
+    private static int factorial(int n) {
         return IntStream.rangeClosed(1, n).reduce((x, y) -> x * y).getAsInt();
     }
-
 }
