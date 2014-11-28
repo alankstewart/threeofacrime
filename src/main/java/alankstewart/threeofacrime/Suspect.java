@@ -15,7 +15,7 @@ public enum Suspect {
     NO_NECK_NICK("NO NECK NICK"),
     PENCIL_TOP("PENCIL TOP");
 
-    private String name;
+    private final String name;
 
     private Suspect(final String name) {
         this.name = name;
@@ -23,7 +23,7 @@ public enum Suspect {
     }
 
     public static List<String> getAll() {
-        return Arrays.asList(Suspect.values()).stream().map(Suspect::name).collect(toList());
+        return Arrays.asList(Suspect.values()).stream().map(Suspect::toString).collect(toList());
     }
 
     @Override

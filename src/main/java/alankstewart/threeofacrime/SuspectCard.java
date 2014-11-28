@@ -15,7 +15,7 @@ public class SuspectCard implements Iterable<Suspect> {
         suspects = new ArrayList<>();
     }
 
-    public SuspectCard(List<Suspect> suspects) {
+    public SuspectCard(final List<Suspect> suspects) {
         Objects.requireNonNull(suspects);
         this.suspects = suspects.stream().collect(toList());
     }
@@ -29,7 +29,7 @@ public class SuspectCard implements Iterable<Suspect> {
         return suspects.iterator();
     }
 
-    public void setValue(int index, Suspect suspect) {
+    public void setValue(final int index, final Suspect suspect) {
         try {
             suspects.set(index, suspect);
         } catch (final IndexOutOfBoundsException e) {
