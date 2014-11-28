@@ -18,12 +18,12 @@ public class ThreeOfACrimeTest {
         ThreeOfACrime threeOfACrime = new ThreeOfACrime();
 
         List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards.size(), is(35));
+        assertThat(suspectCards, hasSize(35));
         SuspectCard suspectCard = threeOfACrime.getNextSuspectCard();
         assertThat(suspectCard, is(notNullValue()));
 
         suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards.size(), is(34));
+        assertThat(suspectCards, hasSize(34));
         assertThat(suspectCards, not(hasItem(suspectCard)));
 
         suspectCard = threeOfACrime.getNextSuspectCard();
