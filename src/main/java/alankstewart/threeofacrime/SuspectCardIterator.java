@@ -9,7 +9,7 @@ public final class SuspectCardIterator implements Iterator<SuspectCard> {
     private static final int LENGTH_K = 3;
     private static final int LENGTH_N = 7;
 
-    private final SuspectCard suspectCard = new SuspectCard();
+    private final SuspectCardBuilder suspectCardBuilder = new SuspectCardBuilder();
     private final int[] intArray = IntStream.rangeClosed(0, LENGTH_K).toArray();
     private int endIndex = 1;
 
@@ -20,7 +20,7 @@ public final class SuspectCardIterator implements Iterator<SuspectCard> {
 
     @Override
     public SuspectCard next() {
-        IntStream.rangeClosed(1, LENGTH_K).forEach(i -> suspectCard.setValue(i - 1, SUSPECTS[intArray[i] - 1]));
+        IntStream.rangeClosed(1, LENGTH_K).forEach(i -> suspectCardBuilder.setSuspect(i - 1, SUSPECTS[intArray[i] - 1]));
         endIndex = LENGTH_K;
         while (intArray[endIndex] == LENGTH_N - LENGTH_K + endIndex) {
             endIndex--;
@@ -31,7 +31,7 @@ public final class SuspectCardIterator implements Iterator<SuspectCard> {
 
         intArray[endIndex]++;
         IntStream.rangeClosed(endIndex + 1, LENGTH_K).forEach(i -> intArray[i] = intArray[i - 1] + 1);
-        return new SuspectCard(suspectCard.getSuspects());
+        return suspectCardBuilder.build();
     }
 
     @Override

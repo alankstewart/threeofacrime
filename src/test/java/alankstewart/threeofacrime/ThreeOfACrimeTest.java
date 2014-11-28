@@ -19,6 +19,8 @@ public class ThreeOfACrimeTest {
 
         List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
         assertThat(suspectCards, hasSize(35));
+        suspectCards.forEach(System.out::println);
+
         SuspectCard suspectCard = threeOfACrime.getNextSuspectCard();
         assertThat(suspectCard, is(notNullValue()));
 
@@ -32,6 +34,6 @@ public class ThreeOfACrimeTest {
         assertThat(suspectCards, hasSize(33));
         assertThat(suspectCards, not(hasItem(suspectCard)));
 
-        suspectCards.forEach(System.out::println);
+
     }
 }

@@ -1,44 +1,37 @@
 package alankstewart.threeofacrime;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.StringJoiner;
 
-import static java.util.stream.Collectors.toList;
+public final class SuspectCard {
 
-public class SuspectCard implements Iterable<Suspect> {
+    private final Suspect suspect1;
+    private final Suspect suspect2;
+    private final Suspect suspect3;
 
-    private final List<Suspect> suspects;
-
-    public SuspectCard() {
-        suspects = new ArrayList<>();
+    SuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
+        this.suspect1 = suspect1;
+        this.suspect2 = suspect2;
+        this.suspect3 = suspect3;
     }
 
-    public SuspectCard(final List<Suspect> suspects) {
-        Objects.requireNonNull(suspects);
-        this.suspects = suspects.stream().collect(toList());
+    public Suspect getSuspect1() {
+        return suspect1;
     }
 
-    public List<Suspect> getSuspects() {
-        return suspects;
+    public Suspect getSuspect2() {
+        return suspect2;
     }
 
-    @Override
-    public Iterator<Suspect> iterator() {
-        return suspects.iterator();
-    }
-
-    public void setValue(final int index, final Suspect suspect) {
-        try {
-            suspects.set(index, suspect);
-        } catch (final IndexOutOfBoundsException e) {
-            suspects.add(index, suspect);
-        }
+    public Suspect getSuspect3() {
+        return suspect3;
     }
 
     @Override
     public String toString() {
-        return suspects.toString();
+        return new StringJoiner(", ", "[", "]")
+                .add(suspect1.toString())
+                .add(suspect2.toString())
+                .add(suspect3.toString())
+                .toString();
     }
 }

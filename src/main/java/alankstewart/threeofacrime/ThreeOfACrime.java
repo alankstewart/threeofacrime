@@ -9,7 +9,7 @@ import static java.util.stream.Collectors.toList;
 
 public class ThreeOfACrime implements Iterable<SuspectCard> {
 
-    private List<SuspectCard> suspectCards;
+    private final List<SuspectCard> suspectCards;
 
     public ThreeOfACrime() {
         suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
@@ -28,4 +28,9 @@ public class ThreeOfACrime implements Iterable<SuspectCard> {
     public SuspectCard getNextSuspectCard() {
         return suspectCards.isEmpty() ? null : suspectCards.remove(0);
     }
+
+//    public SuspectCard getSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
+//        List<Suspect> suspects = Arrays.asList(suspect1, suspect2, suspect3);
+//
+//    }
 }
