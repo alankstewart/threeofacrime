@@ -21,6 +21,9 @@ public class ThreeOfACrimeTest {
         assertThat(suspectCards, hasSize(35));
         suspectCards.forEach(System.out::println);
 
+        assertThat(threeOfACrime.getSuspectCard(Suspect.NO_NECK_NICK, Suspect.HUMPTY_BUMPTY, Suspect.PENCIL_TOP), is(true));
+        assertThat(threeOfACrime.getSuspectCard(Suspect.KID_CASSIDY, Suspect.HUMPTY_BUMPTY, Suspect.PENCIL_TOP), is(true));
+
         SuspectCard suspectCard = threeOfACrime.getNextSuspectCard();
         assertThat(suspectCard, is(notNullValue()));
 

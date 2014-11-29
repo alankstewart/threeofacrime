@@ -1,37 +1,49 @@
 package alankstewart.threeofacrime;
 
-import java.util.StringJoiner;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class SuspectCard {
 
-    private final Suspect suspect1;
-    private final Suspect suspect2;
-    private final Suspect suspect3;
+    private final List<Suspect> suspects;
 
     SuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
-        this.suspect1 = suspect1;
-        this.suspect2 = suspect2;
-        this.suspect3 = suspect3;
+        suspects = Stream.of(suspect1, suspect2, suspect3)
+                .distinct()
+                .filter(Objects::nonNull)
+                .limit(3)
+                .collect(Collectors.toList());
+
+        if (suspects.size() != 3) {
+            throw new IllegalArgumentException("Must have three non-null unique suspects");
+        }
     }
 
-    public Suspect getSuspect1() {
-        return suspect1;
+    public List<Suspect> getSuspects() {
+        return suspects;
     }
 
-    public Suspect getSuspect2() {
-        return suspect2;
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof SuspectCard)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        final SuspectCard that = (SuspectCard) obj;
+        return suspects.containsAll(that.getSuspects());
     }
 
-    public Suspect getSuspect3() {
-        return suspect3;
+    @Override
+    public int hashCode() {
+        return suspects != null ? suspects.hashCode() : 0;
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", "[", "]")
-                .add(suspect1.toString())
-                .add(suspect2.toString())
-                .add(suspect3.toString())
-                .toString();
+        return suspects.stream().map(Object::toString).collect(Collectors.joining(", "));
     }
 }

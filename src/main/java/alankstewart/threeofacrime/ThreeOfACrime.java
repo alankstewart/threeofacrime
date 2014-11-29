@@ -29,8 +29,8 @@ public class ThreeOfACrime implements Iterable<SuspectCard> {
         return suspectCards.isEmpty() ? null : suspectCards.remove(0);
     }
 
-//    public SuspectCard getSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
-//        List<Suspect> suspects = Arrays.asList(suspect1, suspect2, suspect3);
-//
-//    }
+    public boolean getSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
+        SuspectCard suspectCard = new SuspectCard(suspect1, suspect2, suspect3);
+        return suspectCards.contains(suspectCard);
+    }
 }
