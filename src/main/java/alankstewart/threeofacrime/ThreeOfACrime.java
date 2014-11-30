@@ -26,7 +26,7 @@ public class ThreeOfACrime implements Iterable<SuspectCard> {
         return Collections.unmodifiableList(suspectCards);
     }
 
-    public Optional<SuspectCard> getNextSuspectCard() {
+    public Optional<SuspectCard> getSuspectCard() {
         return suspectCards.isEmpty() ? Optional.empty() : Optional.of(suspectCards.remove(0));
     }
 

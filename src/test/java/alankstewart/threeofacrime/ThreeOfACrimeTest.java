@@ -27,14 +27,14 @@ public class ThreeOfACrimeTest {
         assertThat(suspectCards, hasSize(35));
         suspectCards.forEach(System.out::println);
 
-        Optional<SuspectCard> suspectCard = threeOfACrime.getNextSuspectCard();
+        Optional<SuspectCard> suspectCard = threeOfACrime.getSuspectCard();
         assertThat(suspectCard.isPresent(), is(true));
 
         suspectCards = threeOfACrime.getSuspectCards();
         assertThat(suspectCards, hasSize(34));
         assertThat(suspectCards, not(hasItem(suspectCard.get())));
 
-        suspectCard = threeOfACrime.getNextSuspectCard();
+        suspectCard = threeOfACrime.getSuspectCard();
         assertThat(suspectCard, is(notNullValue()));
         suspectCards = threeOfACrime.getSuspectCards();
         assertThat(suspectCards, hasSize(33));
@@ -60,7 +60,7 @@ public class ThreeOfACrimeTest {
         ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
         assertThat(suspectCards, hasSize(35));
-        IntStream.range(0, 35).forEach(i -> threeOfACrime.getNextSuspectCard());
+        IntStream.range(0, 35).forEach(i -> threeOfACrime.getSuspectCard());
         assertThat(threeOfACrime.getSuspectCards(), empty());
     }
 }
