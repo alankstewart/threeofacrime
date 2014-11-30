@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import static alankstewart.threeofacrime.Suspect.HUMPTY_BUMPTY;
 import static alankstewart.threeofacrime.Suspect.NO_NECK_NICK;
@@ -13,6 +14,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertThat;
 
 public class ThreeOfACrimeTest {
@@ -51,5 +53,14 @@ public class ThreeOfACrimeTest {
         suspectCards = threeOfACrime.getSuspectCards();
         assertThat(suspectCards, hasSize(34));
         assertThat(suspectCards, not(hasItem(suspectCard.get())));
+    }
+
+    @Test
+    public void shouldFindAndRemoveAllSuspectCards() {
+        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
+        assertThat(suspectCards, hasSize(35));
+        IntStream.range(0, 35).forEach(i -> threeOfACrime.getNextSuspectCard());
+        assertThat(threeOfACrime.getSuspectCards(), empty());
     }
 }

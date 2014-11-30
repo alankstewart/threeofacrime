@@ -23,7 +23,7 @@ public class ThreeOfACrime implements Iterable<SuspectCard> {
     }
 
     public List<SuspectCard> getSuspectCards() {
-        return suspectCards;
+        return Collections.unmodifiableList(suspectCards);
     }
 
     public Optional<SuspectCard> getNextSuspectCard() {
@@ -31,14 +31,7 @@ public class ThreeOfACrime implements Iterable<SuspectCard> {
     }
 
     public Optional<SuspectCard> getSuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
-        final Iterator<SuspectCard> iterator = suspectCards.iterator();
-        while (iterator.hasNext()) {
-            final SuspectCard suspectCard = iterator.next();
-            if (suspectCard.equals(new SuspectCard(suspect1, suspect2, suspect3))) {
-                iterator.remove();
-                return Optional.of(suspectCard);
-            }
-        }
-        return Optional.empty();
+        final SuspectCard suspectCard = new SuspectCard(suspect1, suspect2, suspect3);
+        return suspectCards.removeIf(s -> s.equals(suspectCard)) ? Optional.of(suspectCard) : Optional.empty();
     }
 }
