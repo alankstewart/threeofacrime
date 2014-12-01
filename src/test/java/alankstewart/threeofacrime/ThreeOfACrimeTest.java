@@ -20,47 +20,9 @@ import static org.junit.Assert.assertThat;
 public class ThreeOfACrimeTest {
 
     @Test
-    public void shouldGenerateRandomSuspects() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+    public void shouldStartGame() {
+        ThreeOfACrime threeOfACrime = ThreeOfACrime.start();
 
-        List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(35));
-        suspectCards.forEach(System.out::println);
-
-        Optional<SuspectCard> suspectCard = threeOfACrime.getSuspectCard();
-        assertThat(suspectCard.isPresent(), is(true));
-
-        suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(34));
-        assertThat(suspectCards, not(hasItem(suspectCard.get())));
-
-        suspectCard = threeOfACrime.getSuspectCard();
-        assertThat(suspectCard, is(notNullValue()));
-        suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(33));
-        assertThat(suspectCards, not(hasItem(suspectCard.get())));
     }
 
-    @Test
-    public void shouldFindAndRemoveSuspectCard() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-
-        List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(35));
-
-        Optional<SuspectCard> suspectCard = threeOfACrime.getSuspectCard(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
-        assertThat(suspectCard.isPresent(), is(true));
-        suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(34));
-        assertThat(suspectCards, not(hasItem(suspectCard.get())));
-    }
-
-    @Test
-    public void shouldFindAndRemoveAllSuspectCards() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-        assertThat(suspectCards, hasSize(35));
-        IntStream.range(0, 35).forEach(i -> threeOfACrime.getSuspectCard());
-        assertThat(threeOfACrime.getSuspectCards(), empty());
-    }
 }

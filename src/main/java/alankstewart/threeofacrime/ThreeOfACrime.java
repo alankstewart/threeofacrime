@@ -1,37 +1,46 @@
 package alankstewart.threeofacrime;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
+import java.util.Set;
 
-import static java.util.stream.Collectors.toList;
+public class ThreeOfACrime {
 
-public class ThreeOfACrime implements Iterable<SuspectCard> {
+    private SuspectCardDeck deck = new SuspectCardDeck();
+    private SuspectCard criminalsCard;
+    private Set<SuspectCard> twoSuspectsMatched = new HashSet<>();
+    private Set<SuspectCard> oneSuspectMatched = new HashSet<>();
+    private Set<SuspectCard> zeroSuspectsMatched = new HashSet<>();
 
-    private final List<SuspectCard> suspectCards;
-
-    public ThreeOfACrime() {
-        suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
-        Collections.shuffle(suspectCards);
+    private ThreeOfACrime() {
+        criminalsCard = deck.getSuspectCard().get();
     }
 
-    @Override
-    public Iterator<SuspectCard> iterator() {
-        return new SuspectCardIterator();
+    public static ThreeOfACrime start() {
+        return new ThreeOfACrime();
     }
 
-    public List<SuspectCard> getSuspectCards() {
-        return Collections.unmodifiableList(suspectCards);
+    public SuspectCardDeck getDeck() {
+        return deck;
     }
 
-    public Optional<SuspectCard> getSuspectCard() {
-        return suspectCards.isEmpty() ? Optional.empty() : Optional.of(suspectCards.remove(0));
+    public SuspectCard getCriminalsCard() {
+        return criminalsCard;
     }
 
-    public Optional<SuspectCard> getSuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
-        final SuspectCard suspectCard = new SuspectCard(suspect1, suspect2, suspect3);
-        return suspectCards.removeIf(s -> s.equals(suspectCard)) ? Optional.of(suspectCard) : Optional.empty();
+    public Optional<SuspectCard> getNextSuspectCard() {
+        return deck.getSuspectCard();
+    }
+
+    public void drawSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
+        Optional<SuspectCard> suspectCard = deck.getSuspectCard(suspect1, suspect2, suspect3);
+        if (suspectCard.isPresent()) {
+            if (Collections.disjoint(criminalsCard.getSuspects(), suspectCard.get().getSuspects())) {
+                zeroSuspectsMatched.add(suspectCard.get());
+            }
+        }
     }
 }
