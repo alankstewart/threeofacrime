@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class SuspectCardDeckTest {
 
     @Test
-    public void shouldGenerateRandomSuspects() {
+    public void shouldGenerateRandomSuspectCards() {
         SuspectCardDeck deck = new SuspectCardDeck();
 
         List<SuspectCard> suspectCards = deck.getSuspectCards();

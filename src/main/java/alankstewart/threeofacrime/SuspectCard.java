@@ -9,7 +9,7 @@ public final class SuspectCard {
 
     private final List<Suspect> suspects;
 
-    SuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
+    public SuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
         suspects = Stream.of(suspect1, suspect2, suspect3)
                 .distinct()
                 .filter(Objects::nonNull)
@@ -39,7 +39,7 @@ public final class SuspectCard {
 
     @Override
     public int hashCode() {
-        return suspects != null ? suspects.hashCode() : 0;
+        return suspects.hashCode();
     }
 
     @Override

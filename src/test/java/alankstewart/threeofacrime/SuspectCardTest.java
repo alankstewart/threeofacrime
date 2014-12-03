@@ -18,17 +18,17 @@ public class SuspectCardTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void shouldNotCreateSuspectCardWitNullSuspects() {
+    public void shouldNotCreateSuspectCardWithAnyNullSuspects() {
         shouldNotCreateSuspectCard(null, NO_NECK_NICK, null);
     }
 
     @Test
-    public void shouldNotCreateSuspectCardWithNonUniqueSuspects() {
+    public void shouldNotCreateSuspectCardWithRepeatedSuspects() {
         shouldNotCreateSuspectCard(NO_NECK_NICK, NO_NECK_NICK, PENCIL_TOP);
     }
 
     @Test
-    public void shouldCreateSuspectCardWitUniqueSuspects() {
+    public void shouldCreateSuspectCardWithUniqueSuspects() {
         final SuspectCard suspectCard = new SuspectCard(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
         assertThat(suspectCard, is(notNullValue()));
         assertThat(suspectCard.getSuspects(), hasSize(3));
