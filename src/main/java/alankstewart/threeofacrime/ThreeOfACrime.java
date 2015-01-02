@@ -12,7 +12,6 @@ import static java.util.stream.Collectors.toList;
 public final class ThreeOfACrime implements Iterable<SuspectCard> {
 
     private final List<SuspectCard> suspectCards;
-    private final Set<Suspect> innocentSuspects = new HashSet<>();
 
     private ThreeOfACrime() {
         suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
@@ -43,12 +42,7 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
         return matchSuspects(suspectCard, 4);
     }
 
-    public List<SuspectCard> matchAllSuspects(final SuspectCard suspectCard) {
-        return matchSuspects(suspectCard, 3);
-    }
-
     private List<SuspectCard> matchSuspects(final SuspectCard suspectCard, final int number) {
-        suspectCards.remove(suspectCard);
         suspectCards.retainAll(suspectCards.stream()
                 .filter(s -> {
                     Set<Suspect> suspects = new HashSet<>(s.getSuspects());
@@ -56,6 +50,7 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
                     return suspects.size() == number;
                 })
                 .collect(toList()));
+        suspectCards.remove(suspectCard);
         return getSuspectCards();
     }
 }

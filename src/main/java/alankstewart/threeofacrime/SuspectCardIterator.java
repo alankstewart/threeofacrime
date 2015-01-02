@@ -6,7 +6,7 @@ import java.util.List;
 
 import static java.util.stream.IntStream.rangeClosed;
 
-public final class SuspectCardIterator implements Iterator<SuspectCard> {
+final class SuspectCardIterator implements Iterator<SuspectCard> {
 
     private static final Suspect[] SUSPECTS = Suspect.values();
     private static final int LENGTH_K = 3;
