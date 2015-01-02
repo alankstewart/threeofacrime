@@ -56,8 +56,7 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
                     Set<Suspect> suspects = new HashSet<>(s.getSuspects());
                     suspects.addAll(suspectCard.getSuspects());
                     return suspects.size() == number;
-                })
-                .collect(toList()));
+                }).collect(toList()));
         return this;
     }
 }
