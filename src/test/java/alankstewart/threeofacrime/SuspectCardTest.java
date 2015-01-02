@@ -29,7 +29,7 @@ public class SuspectCardTest {
 
     @Test
     public void shouldCreateSuspectCardWithUniqueSuspects() {
-        final SuspectCard suspectCard = new SuspectCard(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
+        final SuspectCard suspectCard = SuspectCard.of(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
         assertThat(suspectCard, is(notNullValue()));
         assertThat(suspectCard.getSuspects(), hasSize(3));
     }
@@ -37,7 +37,6 @@ public class SuspectCardTest {
     private void shouldNotCreateSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Must have three non-null unique suspects");
-
-        new SuspectCard(suspect1, suspect2, suspect3);
+        SuspectCard.of(suspect1, suspect2, suspect3);
     }
 }

@@ -2,43 +2,60 @@ package alankstewart.threeofacrime;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.StreamSupport;
 
-public class ThreeOfACrime {
+import static java.util.stream.Collectors.toList;
 
-    private SuspectCardDeck deck = new SuspectCardDeck();
-    private SuspectCard perpetratorsCard;
-    private Set<SuspectCard> twoSuspectsMatched = new HashSet<>();
-    private Set<SuspectCard> oneSuspectMatched = new HashSet<>();
-    private Set<SuspectCard> zeroSuspectsMatched = new HashSet<>();
+public final class ThreeOfACrime implements Iterable<SuspectCard> {
+
+    private final List<SuspectCard> suspectCards;
+    private final Set<Suspect> innocentSuspects = new HashSet<>();
 
     private ThreeOfACrime() {
-        perpetratorsCard = deck.getSuspectCard().get();
+        suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
     }
 
     public static ThreeOfACrime start() {
         return new ThreeOfACrime();
     }
 
-    public SuspectCardDeck getDeck() {
-        return deck;
+    @Override
+    public Iterator<SuspectCard> iterator() {
+        return new SuspectCardIterator();
     }
 
-    public SuspectCard getPerpetratorsCard() {
-        return perpetratorsCard;
+    public List<SuspectCard> getSuspectCards() {
+        return Collections.unmodifiableList(suspectCards);
     }
 
-    public Optional<SuspectCard> getNextSuspectCard() {
-        return deck.getSuspectCard();
+    public List<SuspectCard> matchZeroSuspects(final SuspectCard suspectCard) {
+        return matchSuspects(suspectCard, 6);
     }
 
-    public void drawSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
-        Optional<SuspectCard> suspectCard = deck.getSuspectCard(suspect1, suspect2, suspect3);
-        if (suspectCard.isPresent()) {
-            if (Collections.disjoint(perpetratorsCard.getSuspects(), suspectCard.get().getSuspects())) {
-                zeroSuspectsMatched.add(suspectCard.get());
-            }
-        }
+    public List<SuspectCard> matchOneSuspect(final SuspectCard suspectCard) {
+        return matchSuspects(suspectCard, 5);
+    }
+
+    public List<SuspectCard> matchTwoSuspects(final SuspectCard suspectCard) {
+        return matchSuspects(suspectCard, 4);
+    }
+
+    public List<SuspectCard> matchAllSuspects(final SuspectCard suspectCard) {
+        return matchSuspects(suspectCard, 3);
+    }
+
+    private List<SuspectCard> matchSuspects(final SuspectCard suspectCard, final int number) {
+        suspectCards.remove(suspectCard);
+        suspectCards.retainAll(suspectCards.stream()
+                .filter(s -> {
+                    Set<Suspect> suspects = new HashSet<>(s.getSuspects());
+                    suspects.addAll(suspectCard.getSuspects());
+                    return suspects.size() == number;
+                })
+                .collect(toList()));
+        return getSuspectCards();
     }
 }
