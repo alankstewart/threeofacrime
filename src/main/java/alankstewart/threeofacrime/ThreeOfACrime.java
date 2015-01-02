@@ -42,6 +42,13 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
         return matchSuspects(suspectCard, 4);
     }
 
+    public ThreeOfACrime printSuspectCards() {
+        getSuspectCards().forEach(System.out::println);
+        System.out.println(String.format("%d\n-----------------------------------------------",
+                getSuspectCards().size()));
+        return this;
+    }
+
     private ThreeOfACrime matchSuspects(final SuspectCard suspectCard, final int number) {
         suspectCards.remove(suspectCard);
         suspectCards.retainAll(suspectCards.stream()
@@ -51,13 +58,6 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
                     return suspects.size() == number;
                 })
                 .collect(toList()));
-        return this;
-    }
-
-    public ThreeOfACrime printSuspectCards() {
-        getSuspectCards().forEach(System.out::println);
-        System.out.println(String.format("%d\n-----------------------------------------------",
-                getSuspectCards().size()));
         return this;
     }
 }
