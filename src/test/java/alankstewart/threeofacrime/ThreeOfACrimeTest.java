@@ -28,23 +28,22 @@ public class ThreeOfACrimeTest {
     @Test
     public void shouldMatchZeroSuspects() {
         ThreeOfACrime threeOfACrime = ThreeOfACrime.start();
-        threeOfACrime.matchZeroSuspects(SUSPECT_CARD);
         assertThat(threeOfACrime.matchZeroSuspects(SUSPECT_CARD), hasSize(4));
-        threeOfACrime.getSuspectCards().forEach(System.out::println);
+        printSuspectCards(threeOfACrime);
     }
 
     @Test
     public void shouldMatchOneSuspect() {
         ThreeOfACrime threeOfACrime = ThreeOfACrime.start();
         assertThat(threeOfACrime.matchOneSuspect(SUSPECT_CARD), hasSize(18));
-        threeOfACrime.getSuspectCards().forEach(System.out::println);
+        printSuspectCards(threeOfACrime);
     }
 
     @Test
     public void shouldMatchTwoSuspects() {
         ThreeOfACrime threeOfACrime = ThreeOfACrime.start();
         assertThat(threeOfACrime.matchTwoSuspects(SUSPECT_CARD), hasSize(12));
-        threeOfACrime.getSuspectCards().forEach(System.out::println);
+        printSuspectCards(threeOfACrime);
     }
 
     @Test
@@ -52,6 +51,7 @@ public class ThreeOfACrimeTest {
         ThreeOfACrime threeOfACrime = ThreeOfACrime.start();
         assertThat(threeOfACrime.matchZeroSuspects(SUSPECT_CARD), hasSize(4));
         assertThat(threeOfACrime.matchTwoSuspects(SuspectCard.of(HUMPTY_BUMPTY, JONNY_CORTEX, PENCIL_TOP)), hasSize(3));
+        printSuspectCards(threeOfACrime);
     }
 
     @Test
@@ -60,6 +60,10 @@ public class ThreeOfACrimeTest {
         assertThat(threeOfACrime.matchOneSuspect(SUSPECT_CARD), hasSize(18));
         assertThat(threeOfACrime.matchOneSuspect(SuspectCard.of(HUMPTY_BUMPTY, JONNY_CORTEX, PENCIL_TOP)), hasSize(9));
         assertThat(threeOfACrime.matchTwoSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, PENCIL_TOP)), hasSize(2));
+        printSuspectCards(threeOfACrime);
+    }
+
+    private void printSuspectCards(ThreeOfACrime threeOfACrime) {
         threeOfACrime.getSuspectCards().forEach(System.out::println);
     }
 }
