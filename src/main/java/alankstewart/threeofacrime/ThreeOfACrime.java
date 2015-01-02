@@ -30,19 +30,20 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
         return Collections.unmodifiableList(suspectCards);
     }
 
-    public List<SuspectCard> matchZeroSuspects(final SuspectCard suspectCard) {
+    public ThreeOfACrime matchZeroSuspects(final SuspectCard suspectCard) {
         return matchSuspects(suspectCard, 6);
     }
 
-    public List<SuspectCard> matchOneSuspect(final SuspectCard suspectCard) {
+    public ThreeOfACrime matchOneSuspect(final SuspectCard suspectCard) {
         return matchSuspects(suspectCard, 5);
     }
 
-    public List<SuspectCard> matchTwoSuspects(final SuspectCard suspectCard) {
+    public ThreeOfACrime matchTwoSuspects(final SuspectCard suspectCard) {
         return matchSuspects(suspectCard, 4);
     }
 
-    private List<SuspectCard> matchSuspects(final SuspectCard suspectCard, final int number) {
+    private ThreeOfACrime matchSuspects(final SuspectCard suspectCard, final int number) {
+        suspectCards.remove(suspectCard);
         suspectCards.retainAll(suspectCards.stream()
                 .filter(s -> {
                     Set<Suspect> suspects = new HashSet<>(s.getSuspects());
@@ -50,7 +51,13 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
                     return suspects.size() == number;
                 })
                 .collect(toList()));
-        suspectCards.remove(suspectCard);
-        return getSuspectCards();
+        return this;
+    }
+
+    public ThreeOfACrime printSuspectCards() {
+        getSuspectCards().forEach(System.out::println);
+        System.out.println(String.format("%d\n-----------------------------------------------",
+                getSuspectCards().size()));
+        return this;
     }
 }
