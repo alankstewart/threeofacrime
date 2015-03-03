@@ -54,7 +54,7 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldPlayGame2() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime(SuspectCard.of(LOOSE_EYE_LENNY, LOUIE_ST_LOUIS, PENCIL_TOP));
+        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchOneSuspect(SUSPECT_CARD2);
@@ -63,7 +63,7 @@ public class ThreeOfACrimeTest {
         assertEquals(2, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchTwoSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, LOUIE_ST_LOUIS));
         assertEquals(1, threeOfACrime.getSuspectCards().size());
-        assertEquals(threeOfACrime.getSuspectCards().get(0), threeOfACrime.getSuspectCard());
+        assertEquals(SuspectCard.of(LOOSE_EYE_LENNY, LOUIE_ST_LOUIS, PENCIL_TOP), threeOfACrime.getSuspectCards().get(0));
         threeOfACrime.printSuspectCards();
     }
 }

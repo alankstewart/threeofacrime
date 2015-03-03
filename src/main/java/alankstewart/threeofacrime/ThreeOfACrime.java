@@ -11,24 +11,14 @@ import static java.util.stream.Collectors.toList;
 public final class ThreeOfACrime implements Iterable<SuspectCard> {
 
     private final List<SuspectCard> suspectCards;
-    private SuspectCard suspectCard;
 
     public ThreeOfACrime() {
         suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
     }
 
-    public ThreeOfACrime(final SuspectCard suspectCard) {
-        this();
-        this.suspectCard = suspectCard;
-    }
-
     @Override
     public Iterator<SuspectCard> iterator() {
         return new SuspectCardIterator();
-    }
-
-    public SuspectCard getSuspectCard() {
-        return suspectCard;
     }
 
     public List<SuspectCard> getSuspectCards() {
