@@ -9,7 +9,7 @@ import static alankstewart.threeofacrime.Suspect.NO_NECK_NICK;
 import static alankstewart.threeofacrime.Suspect.PENCIL_TOP;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class SuspectCardTest {
@@ -31,7 +31,7 @@ public class SuspectCardTest {
     public void shouldCreateSuspectCardWithUniqueSuspects() {
         final SuspectCard suspectCard = SuspectCard.of(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
         assertThat(suspectCard, is(notNullValue()));
-        assertThat(suspectCard.getSuspects(), hasSize(3));
+        assertEquals(3, suspectCard.getSuspects().size());
     }
 
     private void shouldNotCreateSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {

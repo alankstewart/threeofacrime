@@ -8,7 +8,6 @@ import static java.util.stream.IntStream.rangeClosed;
 
 final class SuspectCardIterator implements Iterator<SuspectCard> {
 
-    private static final Suspect[] SUSPECTS = Suspect.values();
     private static final int LENGTH_K = 3;
     private static final int LENGTH_N = 7;
 
@@ -23,7 +22,7 @@ final class SuspectCardIterator implements Iterator<SuspectCard> {
 
     @Override
     public SuspectCard next() {
-        rangeClosed(1, LENGTH_K).forEach(i -> setSuspect(i - 1, SUSPECTS[array[i] - 1]));
+        rangeClosed(1, LENGTH_K).forEach(i -> setSuspect(i - 1, Suspect.values()[array[i] - 1]));
         endIndex = LENGTH_K;
         while (array[endIndex] == LENGTH_N - LENGTH_K + endIndex) {
             endIndex--;

@@ -2,9 +2,9 @@ package alankstewart.threeofacrime;
 
 import java.util.stream.IntStream;
 
-public final class Util {
+public final class MathUtil {
 
-    private Util() {
+    private MathUtil() {
     }
 
     public static int combination(final int n, final int k) {
