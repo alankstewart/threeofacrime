@@ -39,8 +39,7 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
 
     public void printSuspectCards() {
         getSuspectCards().forEach(System.out::println);
-        System.out.println(String.format("%d\n-----------------------------------------------",
-                getSuspectCards().size()));
+        System.out.format("%d\n-----------------------------------------------\n", getSuspectCards().size());
     }
 
     private void matchSuspects(final SuspectCard suspectCard, final int number) {
