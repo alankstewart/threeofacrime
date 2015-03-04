@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import static alankstewart.threeofacrime.Suspect.from;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -26,6 +27,10 @@ public final class SuspectCard implements Iterable<Suspect> {
 
     public static SuspectCard of(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
         return new SuspectCard(suspect1, suspect2, suspect3);
+    }
+
+    public static SuspectCard of(final String suspect1, final String suspect2, final String suspect3) {
+        return of(from(suspect1), from(suspect2), from(suspect3));
     }
 
     @Override
@@ -51,7 +56,7 @@ public final class SuspectCard implements Iterable<Suspect> {
 
     @Override
     public int hashCode() {
-        return suspects.hashCode();
+        return suspects.stream().mapToInt(Enum::hashCode).sum();
     }
 
     @Override
