@@ -19,7 +19,13 @@ public final class PlayGame {
 
             final String[] tokens = line.split(",");
             if (tokens.length == 4) {
-                final int matches = Integer.parseInt(tokens[3]);
+                int matches;
+                try {
+                    matches = Integer.parseInt(tokens[3]);
+                } catch (final NumberFormatException e) {
+                    System.out.println("You must enter 0, 1, or 2 for the number of matches");
+                    continue;
+                }
                 if (matches < 0 || matches > 2) {
                     System.out.println("You must enter 0, 1, or 2 for the number of matches");
                     continue;
