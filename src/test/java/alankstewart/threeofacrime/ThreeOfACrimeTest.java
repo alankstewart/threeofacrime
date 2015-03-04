@@ -44,16 +44,7 @@ public class ThreeOfACrimeTest {
     }
 
     @Test
-    public void shouldPlayGame1() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        threeOfACrime.matchZeroSuspects(SUSPECT_CARD1);
-        assertEquals(4, threeOfACrime.getSuspectCards().size());
-        threeOfACrime.matchTwoSuspects(SUSPECT_CARD2);
-        assertEquals(3, threeOfACrime.getSuspectCards().size());
-    }
-
-    @Test
-    public void shouldPlayGame2() {
+    public void shouldPlayGame() {
         ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
