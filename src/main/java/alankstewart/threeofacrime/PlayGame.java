@@ -8,7 +8,7 @@ import java.util.Scanner;
 public final class PlayGame {
 
     public static void main(final String[] args) {
-        System.out.println("Enter three unique suspects and the number of matches separated by commas or 'q' to quit");
+        System.out.println("Please enter three unique suspects and the number of matches separated by commas or 'q' to quit");
         final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         final Scanner console = new Scanner(System.in);
         while (console.hasNextLine()) {
@@ -21,7 +21,7 @@ public final class PlayGame {
             if (tokens.length == 4) {
                 final int matches = Integer.parseInt(tokens[3]);
                 if (matches < 0 || matches > 2) {
-                    System.out.println("Must enter 0, 1, or 2 for the number of matches");
+                    System.out.println("You must enter 0, 1, or 2 for the number of matches");
                     continue;
                 }
 
@@ -49,7 +49,7 @@ public final class PlayGame {
                     break;
                 }
             } else {
-                System.out.println("Must enter three suspects and number of matches");
+                System.out.println("You must enter three suspects and the number of matches");
             }
         }
     }
