@@ -1,4 +1,4 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.util;
 
 import org.junit.Test;
 

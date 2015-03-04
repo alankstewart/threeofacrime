@@ -1,15 +1,15 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.model;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static alankstewart.threeofacrime.Suspect.HUMPTY_BUMPTY;
-import static alankstewart.threeofacrime.Suspect.LOOSE_EYE_LENNY;
-import static alankstewart.threeofacrime.Suspect.LOUIE_ST_LOUIS;
-import static alankstewart.threeofacrime.Suspect.NO_NECK_NICK;
-import static alankstewart.threeofacrime.Suspect.PENCIL_TOP;
-import static alankstewart.threeofacrime.SuspectCard.of;
+import static alankstewart.threeofacrime.model.Suspect.HUMPTY_BUMPTY;
+import static alankstewart.threeofacrime.model.Suspect.LOOSE_EYE_LENNY;
+import static alankstewart.threeofacrime.model.Suspect.LOUIE_ST_LOUIS;
+import static alankstewart.threeofacrime.model.Suspect.NO_NECK_NICK;
+import static alankstewart.threeofacrime.model.Suspect.PENCIL_TOP;
+import static alankstewart.threeofacrime.model.SuspectCard.of;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
@@ -70,7 +70,7 @@ public class SuspectCardTest {
         assertNotEquals(of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, PENCIL_TOP).hashCode(), of(LOUIE_ST_LOUIS, LOOSE_EYE_LENNY, PENCIL_TOP).hashCode());
     }
 
-    private void shouldNotCreateSuspectCard(Suspect suspect1, Suspect suspect2, Suspect suspect3) {
+    private void shouldNotCreateSuspectCard(final Suspect suspect1, final Suspect suspect2, final Suspect suspect3) {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Must have three non-null unique suspects");
         of(suspect1, suspect2, suspect3);

@@ -1,11 +1,11 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.model;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import static alankstewart.threeofacrime.Suspect.from;
+import static alankstewart.threeofacrime.model.Suspect.from;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 

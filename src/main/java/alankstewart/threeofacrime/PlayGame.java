@@ -1,5 +1,8 @@
 package alankstewart.threeofacrime;
 
+import alankstewart.threeofacrime.model.SuspectCard;
+import alankstewart.threeofacrime.model.ThreeOfACrime;
+
 import java.util.Scanner;
 
 public final class PlayGame {

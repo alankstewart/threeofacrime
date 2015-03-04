@@ -1,4 +1,4 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.model;
 
 import java.util.Collections;
 import java.util.Iterator;

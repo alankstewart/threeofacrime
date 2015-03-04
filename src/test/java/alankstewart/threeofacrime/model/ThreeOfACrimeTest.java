@@ -1,14 +1,14 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.model;
 
 import org.junit.Test;
 
-import static alankstewart.threeofacrime.Suspect.HUMPTY_BUMPTY;
-import static alankstewart.threeofacrime.Suspect.JONNY_CORTEX;
-import static alankstewart.threeofacrime.Suspect.KID_CASSIDY;
-import static alankstewart.threeofacrime.Suspect.LOOSE_EYE_LENNY;
-import static alankstewart.threeofacrime.Suspect.LOUIE_ST_LOUIS;
-import static alankstewart.threeofacrime.Suspect.NO_NECK_NICK;
-import static alankstewart.threeofacrime.Suspect.PENCIL_TOP;
+import static alankstewart.threeofacrime.model.Suspect.HUMPTY_BUMPTY;
+import static alankstewart.threeofacrime.model.Suspect.JONNY_CORTEX;
+import static alankstewart.threeofacrime.model.Suspect.KID_CASSIDY;
+import static alankstewart.threeofacrime.model.Suspect.LOOSE_EYE_LENNY;
+import static alankstewart.threeofacrime.model.Suspect.LOUIE_ST_LOUIS;
+import static alankstewart.threeofacrime.model.Suspect.NO_NECK_NICK;
+import static alankstewart.threeofacrime.model.Suspect.PENCIL_TOP;
 import static org.junit.Assert.assertEquals;
 
 public class ThreeOfACrimeTest {
@@ -18,34 +18,34 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldGenerateRandomSuspectCards() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         assertEquals(35, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchZeroSuspects() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchZeroSuspects(SUSPECT_CARD1);
         assertEquals(4, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchOneSuspect() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchTwoSuspects() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchTwoSuspects(SUSPECT_CARD1);
         assertEquals(12, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldPlayGame() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchOneSuspect(SUSPECT_CARD2);

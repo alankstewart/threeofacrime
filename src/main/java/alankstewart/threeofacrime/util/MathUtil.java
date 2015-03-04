@@ -1,4 +1,4 @@
-package alankstewart.threeofacrime;
+package alankstewart.threeofacrime.util;
 
 import java.util.stream.IntStream;
 
