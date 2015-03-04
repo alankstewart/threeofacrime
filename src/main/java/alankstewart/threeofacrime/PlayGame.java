@@ -5,8 +5,8 @@ import java.util.Scanner;
 public final class PlayGame {
 
     public static void main(final String[] args) {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         System.out.println("Enter three unique suspects and the number of matched suspects separated by commas or 'q' to quit");
+        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
         final Scanner console = new Scanner(System.in);
         while (console.hasNextLine()) {
             final String line = console.nextLine();
