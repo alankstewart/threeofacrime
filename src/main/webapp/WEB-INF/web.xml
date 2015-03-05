@@ -7,13 +7,13 @@
     <display-name>threeofacrime</display-name>
 
     <servlet>
-        <servlet-name>ThreeOfACrimeServlet</servlet-name>
-        <servlet-class>alankstewart.threeofacrime.web.ThreeOfACrimeServlet</servlet-class>
+        <servlet-name>GameServlet</servlet-name>
+        <servlet-class>alankstewart.threeofacrime.web.GameServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ThreeOfACrimeServlet</servlet-name>
+        <servlet-name>GameServlet</servlet-name>
         <url-pattern>/threeofacrime/*</url-pattern>
     </servlet-mapping>
 

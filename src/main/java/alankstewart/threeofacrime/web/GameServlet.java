@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by alanstewart on 4/03/15.
  */
-public class ThreeOfACrimeServlet extends HttpServlet {
+public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
