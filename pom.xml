@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>alankstewart</groupId>
     <artifactId>threeofacrime</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Three of a Crime</name>
     <description>Three of a Crime</description>
     <version>1.0</version>
@@ -40,7 +40,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>satin</finalName>
+        <finalName>threeofacrime</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

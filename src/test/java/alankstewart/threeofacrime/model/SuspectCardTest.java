@@ -51,7 +51,7 @@ public class SuspectCardTest {
     public void shouldNotConvertStringsToSuspect() {
         final String malformedSuspect = "HUMPTY BUMPTY1";
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Unsupported suspect " + malformedSuspect);
+        thrown.expectMessage("Unknown suspect '" + malformedSuspect + "'");
         of(malformedSuspect, "LOOSE-EYE LENNY", "NO NECK NICK");
     }
 
