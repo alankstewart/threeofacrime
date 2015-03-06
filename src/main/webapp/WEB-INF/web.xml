@@ -14,7 +14,7 @@
 
     <servlet-mapping>
         <servlet-name>GameServlet</servlet-name>
-        <url-pattern>/threeofacrime/*</url-pattern>
+        <url-pattern>/play/*</url-pattern>
     </servlet-mapping>
 
 </web-app>
