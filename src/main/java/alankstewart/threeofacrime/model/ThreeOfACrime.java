@@ -25,29 +25,19 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
         return Collections.unmodifiableList(suspectCards);
     }
 
-    public void matchZeroSuspects(final SuspectCard suspectCard) {
-        matchSuspects(suspectCard, 6);
-    }
-
-    public void matchOneSuspect(final SuspectCard suspectCard) {
-        matchSuspects(suspectCard, 5);
-    }
-
-    public void matchTwoSuspects(final SuspectCard suspectCard) {
-        matchSuspects(suspectCard, 4);
+    public void matchSuspects(final SuspectCard suspectCard, final int matches) {
+        if (matches < 0 || matches > 2) {
+            return;
+        }
+        suspectCards.retainAll(suspectCards
+                .stream()
+                .filter(s -> Stream.concat(s.getSuspects().stream(),
+                        suspectCard.getSuspects().stream()).distinct().count() == 6 - matches)
+                .collect(toList()));
     }
 
     public void printSuspectCards() {
         getSuspectCards().forEach(System.out::println);
         System.out.format("%d\n-----------------------------------------------\n", getSuspectCards().size());
-    }
-
-    private void matchSuspects(final SuspectCard suspectCard, final int number) {
-        suspectCards.remove(suspectCard);
-        suspectCards.retainAll(suspectCards
-                .stream()
-                .filter(s -> Stream.concat(s.getSuspects().stream(),
-                        suspectCard.getSuspects().stream()).distinct().count() == number)
-                .collect(toList()));
     }
 }

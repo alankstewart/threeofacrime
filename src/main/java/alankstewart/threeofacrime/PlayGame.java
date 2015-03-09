@@ -39,17 +39,7 @@ public final class PlayGame {
                     continue;
                 }
 
-                switch (matches) {
-                    case 0:
-                        threeOfACrime.matchZeroSuspects(suspectCard);
-                        break;
-                    case 1:
-                        threeOfACrime.matchOneSuspect(suspectCard);
-                        break;
-                    case 2:
-                        threeOfACrime.matchTwoSuspects(suspectCard);
-                        break;
-                }
+                threeOfACrime.matchSuspects(suspectCard, matches);
                 threeOfACrime.printSuspectCards();
                 if (threeOfACrime.getSuspectCards().size() == 1) {
                     break;

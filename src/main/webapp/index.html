@@ -4,35 +4,138 @@
     <title>Three Of A Crime</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
     <style type="text/css">
         body {
             margin-top: 20px;
         }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#suspects").change(function () {
+                checkSubmit();
+            });
 
-        .suspects {
-            height: 25px !important;
+            $("#matchedSuspects").change(function () {
+                checkSubmit();
+            });
+
+            $("#clear").click(function () {
+                $("#suspects :checked").each(function () {
+                    $(this).removeAttr("checked");
+                });
+                checkSubmit();
+            });
+
+            $("#resetGame").click(function () {
+                $.get('/play');
+                $("#clear").click();
+                clearResults();
+            });
+
+            $("#submit").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/play',
+                    data: {
+                        "suspects": $("#suspects :checked").map(function () {
+                            return $(this).val();
+                        }).get(),
+                        "matches": $("#matchedSuspects :checked").val()
+                    },
+                    dataType: "json",
+                    success: displaySuspects,
+                });
+            });
+        });
+
+        function checkSubmit() {
+            if ($("#suspects :checked").length == 3) {
+                $("#suspects :not(:checked)").each(function () {
+                    $(this).attr("disabled", true);
+                });
+                if ($("#matchedSuspects :checked").length > 0) {
+                    $("#submit").removeAttr("disabled");
+                }
+            } else {
+                $("#submit").attr("disabled", true);
+                $("#suspects :not(:checked)").each(function () {
+                    $(this).removeAttr("disabled");
+                });
+            }
         }
 
-    </style>
+        function displaySuspects(data, status, jqXHR) {
+            clearResults();
+            $.each(data, function (index) {
+                addSuspectCard(data[index]);
+            });
+            $("#clear").click();
+         }
+
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            });
+        };
+
+        function addSuspectCard(suspects) {
+            var suspectsTemplate = $("#suspectsTemplate").html();
+            var result = suspectsTemplate.format(suspects);
+            $("#results").append(result);
+        }
+
+        function clearResults() {
+            $("#results").empty();
+        }
+    </script>
+
+    <script type="text/template" id="suspectsTemplate">
+        {0}<br>
+    </script>
 </head>
 <body>
 <div class="container">
     <h1>Three Of A Crime</h1>
 
-    <div class="well">
-        <input type="text" class="suspects" placeholder="Enter 3 suspects">
-    </div>
+    <h4>Suspects</h4>
 
-    <div class="btn-group btn-group" role="group" aria-label="Suspects">
-        <button type="button" class="btn btn-default">HUMPTY BUMPTY</button>
-        <button type="button" class="btn btn-default">JONNY CORTEX</button>
-        <button type="button" class="btn btn-default">KID CASSIDY</button>
-        <button type="button" class="btn btn-default">LOOSE-EYE LENNY</button>
-        <button type="button" class="btn btn-default">LOUIE ST. LOUIS</button>
-        <button type="button" class="btn btn-default">NO NECK NICK</button>
-        <button type="button" class="btn btn-default">PENCIL TOP</button>
+    <form>
+        <div id="suspects" class="btn-group" data-toggle="buttons-checkbox">
+            <label class="checkbox-inline"><input type="checkbox" value="hb">HUMPTY BUMPTY</label>
+            <label class="checkbox-inline"><input type="checkbox" value="jc">JONNY CORTEX</label>
+            <label class="checkbox-inline"><input type="checkbox" value="kc">KID CASSIDY</label>
+            <label class="checkbox-inline"><input type="checkbox" value="lel">LOOSE-EYE LENNY</label>
+            <label class="checkbox-inline"><input type="checkbox" value="lsl">LOUIE ST. LOUIS</label>
+            <label class="checkbox-inline"><input type="checkbox" value="nnn">NO NECK NICK</label>
+            <label class="checkbox-inline"><input type="checkbox" value="pt">PENCIL TOP</label>
+        </div>
+        <br>
+
+        <h4>Matches</h4>
+
+        <div id="matchedSuspects" class="btn-group" data-toggle="buttons-radio">
+            <label class="radio-inline"><input type="radio" name="matches" value="0">0</label>
+            <label class="radio-inline"><input type="radio" name="matches" value="1">1</label>
+            <label class="radio-inline"><input type="radio" name="matches" value="2">2</label>
+        </div>
+
+        <br>
+        <br>
+
+        <input id="submit" type="button" class="btn btn-primary" value="Submit" disabled>
+        <input id="clear" type="button" class="btn btn-success" value="Clear">
+        <input id="resetGame" type="button" class="btn btn-warning" value="Reset Game">
+    </form>
+
+    <br>
+    <br>
+
+    <div class="row">
+        <div id="results">
+        </div>
     </div>
 </div>
 </body>

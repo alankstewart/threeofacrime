@@ -25,34 +25,36 @@ public class ThreeOfACrimeTest {
     @Test
     public void shouldMatchZeroSuspects() {
         final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        threeOfACrime.matchZeroSuspects(SUSPECT_CARD1);
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 0);
         assertEquals(4, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchOneSuspect() {
         final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
+        assertEquals(9, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchTwoSuspects() {
         final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        threeOfACrime.matchTwoSuspects(SUSPECT_CARD1);
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 2);
         assertEquals(12, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldPlayGame() {
         final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        threeOfACrime.matchOneSuspect(SUSPECT_CARD1);
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
-        threeOfACrime.matchOneSuspect(SUSPECT_CARD2);
+        threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
         assertEquals(9, threeOfACrime.getSuspectCards().size());
-        threeOfACrime.matchTwoSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, PENCIL_TOP));
+        threeOfACrime.matchSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, PENCIL_TOP), 2);
         assertEquals(2, threeOfACrime.getSuspectCards().size());
-        threeOfACrime.matchTwoSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, LOUIE_ST_LOUIS));
+        threeOfACrime.matchSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, LOUIE_ST_LOUIS), 2);
         assertEquals(1, threeOfACrime.getSuspectCards().size());
         assertEquals(SuspectCard.of(LOOSE_EYE_LENNY, LOUIE_ST_LOUIS, PENCIL_TOP), threeOfACrime.getSuspectCards().get(0));
         threeOfACrime.printSuspectCards();
