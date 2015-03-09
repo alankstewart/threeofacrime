@@ -74,13 +74,6 @@
             $("#clear").click();
          }
 
-        String.prototype.format = function () {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] != 'undefined' ? args[number] : match;
-            });
-        };
-
         function addSuspectCard(suspects) {
             var suspectsTemplate = $("#suspectsTemplate").html();
             var result = suspectsTemplate.format(suspects);
@@ -90,6 +83,13 @@
         function clearResults() {
             $("#results").empty();
         }
+
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            });
+        };
     </script>
 
     <script type="text/template" id="suspectsTemplate">
