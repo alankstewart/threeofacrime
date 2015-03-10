@@ -1,37 +1,28 @@
 package alankstewart.threeofacrime.model;
 
 import java.util.Arrays;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 public enum Suspect {
 
-    HUMPTY_BUMPTY("HUMPTY BUMPTY", "hb"),
-    JONNY_CORTEX("JONNY CORTEX", "jc"),
-    KID_CASSIDY("KID CASSIDY", "kc"),
-    LOOSE_EYE_LENNY("LOOSE-EYE LENNY", "lel"),
-    LOUIE_ST_LOUIS("LOUIE ST. LOUIS", "lsl"),
-    NO_NECK_NICK("NO NECK NICK", "nnn"),
-    PENCIL_TOP("PENCIL TOP", "pt");
+    HUMPTY_BUMPTY("HUMPTY BUMPTY"),
+    JONNY_CORTEX("JONNY CORTEX"),
+    KID_CASSIDY("KID CASSIDY"),
+    LOOSE_EYE_LENNY("LOOSE-EYE LENNY"),
+    LOUIE_ST_LOUIS("LOUIE ST. LOUIS"),
+    NO_NECK_NICK("NO NECK NICK"),
+    PENCIL_TOP("PENCIL TOP");
 
     private final String name;
-    private final String abbreviation;
 
-    private Suspect(final String name, final String abbreviation) {
+    private Suspect(final String name) {
         this.name = name;
-        this.abbreviation = abbreviation;
     }
 
     public static Suspect from(final String suspect) {
         return Arrays.stream(values())
-                .filter(s -> s.name.equalsIgnoreCase(suspect) || s.abbreviation.equalsIgnoreCase(suspect))
+                .filter(s -> s.name().equalsIgnoreCase(suspect) || s.name.equalsIgnoreCase(suspect))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Unknown suspect '%s'", suspect)));
-    }
-
-    public static List<String> getAll() {
-        return Arrays.stream(values()).map(Suspect::toString).collect(toList());
     }
 
     @Override

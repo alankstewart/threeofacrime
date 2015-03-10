@@ -17,7 +17,7 @@
                 checkSubmit();
             });
 
-            $("#matchedSuspects").change(function () {
+            $("#matches").change(function () {
                 checkSubmit();
             });
 
@@ -39,10 +39,10 @@
                     type: 'POST',
                     url: '/play',
                     data: {
-                        "suspects": $("#suspects :checked").map(function () {
+                        "matchedSuspects": $("#suspects :checked").map(function () {
                             return $(this).val();
                         }).get(),
-                        "matches": $("#matchedSuspects :checked").val()
+                        "matches": $("#matches :checked").val()
                     },
                     dataType: "json",
                     success: displaySuspects,
@@ -55,7 +55,7 @@
                 $("#suspects :not(:checked)").each(function () {
                     $(this).attr("disabled", true);
                 });
-                if ($("#matchedSuspects :checked").length > 0) {
+                if ($("#matches :checked").length > 0) {
                     $("#submit").removeAttr("disabled");
                 }
             } else {
@@ -68,16 +68,27 @@
 
         function displaySuspects(data, status, jqXHR) {
             clearResults();
-            $.each(data, function (index) {
-                addSuspectCard(data[index]);
+            var suspectCards = data.suspectCards;
+            $.each(suspectCards, function (index) {
+                addSuspectCard(suspectCards[index]);
             });
+
+            var innocentSuspects = data.innocentSuspects;
+            $.each(innocentSuspects, function (index) {
+                disableSuspect(innocentSuspects[index]);
+            });
+
             $("#clear").click();
-         }
+        }
 
         function addSuspectCard(suspects) {
             var suspectsTemplate = $("#suspectsTemplate").html();
             var result = suspectsTemplate.format(suspects);
             $("#results").append(result);
+        }
+
+        function disableSuspect(suspect) {
+            $("#suspects :checkbox[value='" + suspect + "']").attr("disabled", true);
         }
 
         function clearResults() {
@@ -98,37 +109,35 @@
 </head>
 <body>
 <div class="container">
-    <h1>Three Of A Crime</h1>
+    <h2>Three Of A Crime</h2>
 
     <h4>Suspects</h4>
 
-    <form>
-        <div id="suspects" class="btn-group" data-toggle="buttons-checkbox">
-            <label class="checkbox-inline"><input type="checkbox" value="hb">HUMPTY BUMPTY</label>
-            <label class="checkbox-inline"><input type="checkbox" value="jc">JONNY CORTEX</label>
-            <label class="checkbox-inline"><input type="checkbox" value="kc">KID CASSIDY</label>
-            <label class="checkbox-inline"><input type="checkbox" value="lel">LOOSE-EYE LENNY</label>
-            <label class="checkbox-inline"><input type="checkbox" value="lsl">LOUIE ST. LOUIS</label>
-            <label class="checkbox-inline"><input type="checkbox" value="nnn">NO NECK NICK</label>
-            <label class="checkbox-inline"><input type="checkbox" value="pt">PENCIL TOP</label>
-        </div>
-        <br>
+    <div id="suspects" class="btn-group" data-toggle="buttons-checkbox">
+        <label class="checkbox-inline"><input type="checkbox" value="HUMPTY_BUMPTY">HUMPTY BUMPTY</label>
+        <label class="checkbox-inline"><input type="checkbox" value="JONNY_CORTEX">JONNY CORTEX</label>
+        <label class="checkbox-inline"><input type="checkbox" value="KID_CASSIDY">KID CASSIDY</label>
+        <label class="checkbox-inline"><input type="checkbox" value="LOOSE_EYE_LENNY">LOOSE-EYE LENNY</label>
+        <label class="checkbox-inline"><input type="checkbox" value="LOUIE_ST_LOUIS">LOUIE ST. LOUIS</label>
+        <label class="checkbox-inline"><input type="checkbox" value="NO_NECK_NICK">NO NECK NICK</label>
+        <label class="checkbox-inline"><input type="checkbox" value="PENCIL_TOP">PENCIL TOP</label>
+    </div>
+    <br>
 
-        <h4>Matches</h4>
+    <h4>Matches</h4>
 
-        <div id="matchedSuspects" class="btn-group" data-toggle="buttons-radio">
-            <label class="radio-inline"><input type="radio" name="matches" value="0">0</label>
-            <label class="radio-inline"><input type="radio" name="matches" value="1">1</label>
-            <label class="radio-inline"><input type="radio" name="matches" value="2">2</label>
-        </div>
+    <div id="matches" class="btn-group" data-toggle="buttons-radio">
+        <label class="radio-inline"><input type="radio" name="match" value="0">0</label>
+        <label class="radio-inline"><input type="radio" name="match" value="1">1</label>
+        <label class="radio-inline"><input type="radio" name="match" value="2">2</label>
+    </div>
 
-        <br>
-        <br>
+    <br>
+    <br>
 
-        <input id="submit" type="button" class="btn btn-primary" value="Submit" disabled>
-        <input id="clear" type="button" class="btn btn-success" value="Clear">
-        <input id="resetGame" type="button" class="btn btn-warning" value="Reset Game">
-    </form>
+    <button id="submit" type="button" class="btn btn-success" disabled>Submit</button>
+    <button id="clear" type="button" class="btn btn-warning">Clear</button>
+    <button id="resetGame" type="button" class="btn btn-danger">Reset Game</button>
 
     <br>
     <br>
