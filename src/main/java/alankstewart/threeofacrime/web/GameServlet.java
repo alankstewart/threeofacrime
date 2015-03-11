@@ -48,7 +48,7 @@ public class GameServlet extends HttpServlet {
         final Set<Suspect> uniqueSuspects = suspectCards.stream().flatMap(s -> s.getSuspects().stream()).collect(toSet());
         final List<Suspect> innocentSuspects = Arrays.stream(Suspect.values()).collect(toList())
                 .stream()
-                .filter(uniqueSuspects::contains)
+                .filter(s -> !uniqueSuspects.contains(s))
                 .collect(toList());
 
         resp.setContentType("application/json");
