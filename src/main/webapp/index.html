@@ -16,24 +16,20 @@
             $("#suspects").change(function () {
                 checkFormElements();
             });
-
             $("#matches").change(function () {
                 checkFormElements();
             });
-
             $("#clear").click(function () {
                 $("#suspects :checked").each(function () {
                     $(this).removeAttr("checked");
                 });
                 checkFormElements();
             });
-
             $("#resetGame").on("click", function (e) {
                 $("#confirm").modal({backdrop: "static", keyboard: false}).on("click", "#reset", function (e) {
                     startNewGame();
                 });
             });
-
             $("#submit").click(function () {
                 $.ajax({
                     type: "POST",
@@ -53,8 +49,9 @@
         function displaySuspects(data, status, jqXHR) {
             clearResults();
             var suspectCards = data.suspectCards;
+            var suspectsTemplate = $("#suspectsTemplate").html();
             $.each(suspectCards, function (index) {
-                addSuspectCard(suspectCards[index]);
+                $("#results").append(suspectsTemplate.format(suspectCards[index]));
             });
 
             $("#clear").click();
@@ -83,12 +80,6 @@
                 });
             }
             disableInnocentSuspects();
-        }
-
-        function addSuspectCard(suspects) {
-            var suspectsTemplate = $("#suspectsTemplate").html();
-            var result = suspectsTemplate.format(suspects);
-            $("#results").append(result);
         }
 
         function disableInnocentSuspects() {
