@@ -11,30 +11,27 @@
         }
     </style>
     <script type="text/javascript">
+        var innocentSuspects;
         $(document).ready(function () {
             $("#suspects").change(function () {
-                checkSubmit();
+                checkFormElements();
             });
 
             $("#matches").change(function () {
-                checkSubmit();
+                checkFormElements();
             });
 
             $("#clear").click(function () {
                 $("#suspects :checked").each(function () {
                     $(this).removeAttr("checked");
                 });
-                checkSubmit();
+                checkFormElements();
             });
 
             $("#resetGame").on("click", function (e) {
-                $("#confirm")
-                        .modal({backdrop: "static", keyboard: false})
-                        .one("click", "#reset", function (e) {
-                            $.get("/play");
-                            $("#clear").click();
-                            clearResults();
-                        });
+                $("#confirm").modal({backdrop: "static", keyboard: false}).on("click", "#reset", function (e) {
+                    startNewGame();
+                });
             });
 
             $("#submit").click(function () {
@@ -56,19 +53,22 @@
         function displaySuspects(data, status, jqXHR) {
             clearResults();
             var suspectCards = data.suspectCards;
-            $("#suspects :checkbox").attr("disabled", true);
             $.each(suspectCards, function (index) {
                 addSuspectCard(suspectCards[index]);
             });
 
             $("#clear").click();
-            var innocentSuspects = data.innocentSuspects;
-            $.each(innocentSuspects, function (index) {
-                disableSuspect(innocentSuspects[index]);
-            });
+            innocentSuspects = data.innocentSuspects;
+            disableInnocentSuspects();
+            if (suspectCards.length == 1) {
+                $("#criminals").text(suspectCards[0]);
+                $("#accusation").modal("show").on("click", "#newGame", function (e) {
+                    startNewGame();
+                });
+            }
         }
 
-        function checkSubmit() {
+        function checkFormElements() {
             if ($("#suspects :checked").length == 3) {
                 $("#suspects :not(:checked)").each(function () {
                     $(this).attr("disabled", true);
@@ -82,6 +82,7 @@
                     $(this).removeAttr("disabled");
                 });
             }
+            disableInnocentSuspects();
         }
 
         function addSuspectCard(suspects) {
@@ -90,14 +91,25 @@
             $("#results").append(result);
         }
 
-        function disableSuspect(suspect) {
-            console.log(suspect);
-            $("#suspects :checkbox[value='" + suspect + "']").attr("disabled", true).parent().css("color", "#d3d3d3");
+        function disableInnocentSuspects() {
+            if (innocentSuspects != null) {
+                $.each(innocentSuspects, function (index) {
+                    console.log(innocentSuspects[index]);
+                    $("#suspects :checkbox[value='" + innocentSuspects[index] + "']").attr("disabled", true).parent().css("color", "#d3d3d3");
+                });
+            }
         }
 
         function clearResults() {
             $("#results").empty();
             $("#suspects :checkbox").removeAttr("hidden disabled").parent().css("color", "");
+        }
+
+        function startNewGame() {
+            innocentSuspects = null;
+            $.get("/play");
+            $("#clear").click();
+            clearResults();
         }
 
         String.prototype.format = function () {
@@ -146,9 +158,9 @@
     </div>
     <br/>
     <br/>
-    <button id="submit" type="button" class="btn btn-success" disabled>Submit</button>
-    <button id="clear" type="button" class="btn btn-warning">Clear</button>
-    <button id="resetGame" type="button" class="btn btn-danger">Reset Game</button>
+    <button id="submit" type="button" class="btn btn-primary" disabled>Submit</button>
+    <button id="clear" type="button" class="btn btn-success">Clear</button>
+    <button id="resetGame" type="button" class="btn btn-warning">Reset Game</button>
     <br/>
     <br/>
 
@@ -161,11 +173,27 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Start a new game?</h4>
+                    <h3 class="modal-title">Start a new game?</h3>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="accusation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Accusation!</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="criminals" class="alert alert-success" role="alert"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="newGame" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
