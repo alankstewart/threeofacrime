@@ -60,12 +60,11 @@
                 addSuspectCard(suspectCards[index]);
             });
 
+            $("#clear").click();
             var innocentSuspects = data.innocentSuspects;
             $.each(innocentSuspects, function (index) {
                 disableSuspect(innocentSuspects[index]);
             });
-
-            $("#clear").click();
         }
 
         function checkSubmit() {
@@ -106,14 +105,12 @@
 
         function disableSuspect(suspect) {
             console.log(suspect);
-           // $("#suspects :checkbox[value='" + suspect + "']").attr("hidden", true);
-            $("#suspects :checkbox[value='" + suspect + "']").attr("disabled", true);
+            $("#suspects :checkbox[value='" + suspect + "']").attr("disabled", true).parent().css("color", "#d3d3d3");
         }
 
         function clearResults() {
             $("#results").empty();
-            $("#suspects :checkbox").removeAttr("hidden");
-            $("#suspects :checkbox").removeAttr("disabled");
+            $("#suspects :checkbox").removeAttr("hidden disabled").parent().css("color", "");
         }
 
         String.prototype.format = function () {
@@ -162,7 +159,7 @@
     </div>
     <br/>
     <br/>
-    <button id="submit" type="button" class="btn btn-success" disabled="disabled">Submit</button>
+    <button id="submit" type="button" class="btn btn-success" disabled>Submit</button>
     <button id="clear" type="button" class="btn btn-warning">Clear</button>
     <button id="resetGame" type="button" class="btn btn-danger">Reset Game</button>
     <br/>
