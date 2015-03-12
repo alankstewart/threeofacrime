@@ -56,6 +56,7 @@
         function displaySuspects(data, status, jqXHR) {
             clearResults();
             var suspectCards = data.suspectCards;
+            $("#suspects :checkbox").attr("disabled", true);
             $.each(suspectCards, function (index) {
                 addSuspectCard(suspectCards[index]);
             });
@@ -81,20 +82,6 @@
                     $(this).removeAttr("disabled");
                 });
             }
-        }
-
-        function displaySuspects(data, status, jqXHR) {
-            clearResults();
-            var suspectCards = data.suspectCards;
-            $.each(suspectCards, function (index) {
-                addSuspectCard(suspectCards[index]);
-            });
-
-            $("#clear").click();
-            var innocentSuspects = data.innocentSuspects;
-            $.each(innocentSuspects, function (index) {
-                disableSuspect(innocentSuspects[index]);
-            });
         }
 
         function addSuspectCard(suspects) {
