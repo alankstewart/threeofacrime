@@ -12,21 +12,25 @@ public enum Suspect {
     NO_NECK_NICK("NO NECK NICK"),
     PENCIL_TOP("PENCIL TOP");
 
-    private final String name;
+    private final String displayName;
 
-    private Suspect(final String name) {
-        this.name = name;
+    private Suspect(final String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public static Suspect from(final String suspect) {
         return Arrays.stream(values())
-                .filter(s -> s.name().equalsIgnoreCase(suspect) || s.name.equalsIgnoreCase(suspect))
+                .filter(s -> s.name().equalsIgnoreCase(suspect) || s.displayName.equalsIgnoreCase(suspect))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Unknown suspect '%s'", suspect)));
     }
 
     @Override
     public String toString() {
-        return name;
+        return displayName;
     }
 }

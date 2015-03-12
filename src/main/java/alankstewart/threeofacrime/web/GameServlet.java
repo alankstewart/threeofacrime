@@ -38,8 +38,8 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        final String[] matchedSuspects = req.getParameterValues("matchedSuspects[]");
-        final SuspectCard suspectCard = SuspectCard.of(matchedSuspects[0], matchedSuspects[1], matchedSuspects[2]);
+        final String[] selectedSuspects = req.getParameterValues("selectedSuspects[]");
+        final SuspectCard suspectCard = SuspectCard.of(selectedSuspects[0], selectedSuspects[1], selectedSuspects[2]);
         final int matches = Integer.parseInt(req.getParameter("matches"));
 
         threeOfACrime.matchSuspects(suspectCard, matches);
@@ -54,14 +54,19 @@ public class GameServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        final Collector<String, JsonArrayBuilder, JsonArrayBuilder> collector = Collector.of(Json::createArrayBuilder,
-                JsonArrayBuilder::add, (left, right) -> {
-                    left.add(right);
-                    return left;
-                });
         Json.createWriter(resp.getOutputStream()).write(Json.createObjectBuilder()
-                .add("suspectCards", suspectCards.stream().map(SuspectCard::toString).collect(collector).build())
-                .add("innocentSuspects", innocentSuspects.stream().map(Suspect::name).collect(collector).build())
+                .add("suspectCards", suspectCards.stream().map(SuspectCard::toJson)
+                        .collect(Collector.of(Json::createArrayBuilder,
+                                JsonArrayBuilder::add, (left, right) -> {
+                                    left.add(right);
+                                    return left;
+                                })).build())
+                .add("innocentSuspects", innocentSuspects.stream().map(Suspect::name)
+                        .collect(Collector.of(Json::createArrayBuilder,
+                                JsonArrayBuilder::add, (left, right) -> {
+                                    left.add(right);
+                                    return left;
+                                })).build())
                 .build());
         resp.getOutputStream().flush();
     }
