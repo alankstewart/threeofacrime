@@ -12,6 +12,7 @@
     </style>
     <script type="text/javascript">
         var innocentSuspects;
+
         $(document).ready(function () {
             $("#suspects").change(function () {
                 checkFormElements();
@@ -56,14 +57,23 @@
             });
 
             $("#clear").click();
+
             innocentSuspects = data.innocentSuspects;
             disableInnocentSuspects();
-            if (suspectCards.length == 1) {
-                var suspectCard = suspectCards[0];
-                $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
-                $("#accusation").modal("show").on("click", "#newGame", function (e) {
-                    startNewGame();
-                });
+
+            switch (suspectCards.length) {
+                case 1:
+                    $("#fifty-fifty").attr("hidden", true);
+                    var suspectCard = suspectCards[0];
+                    $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
+                    $("#accusation").modal("show").on("click", "#newGame", function (e) {
+                        startNewGame();
+                    });
+                    break;
+                case 2:
+                    $("#fifty-fifty").removeAttr("hidden").show();
+                    break;
+                default:
             }
         }
 
@@ -103,6 +113,7 @@
             $.get("/play");
             $("#clear").click();
             clearResults();
+            $("#fifty-fifty").attr("hidden", true);
         }
 
         String.prototype.format = function () {
@@ -114,10 +125,11 @@
     </script>
 
     <script type="text/template" id="suspectsTemplate">
-        <div class="col-md-2">{0}</div>
-        <div class="col-md-2">{1}</div>
-        <div class="col-md-2">{2}</div>
-        <br/>
+        <div class="row">
+            <div class="col-md-2">{0}</div>
+            <div class="col-md-2">{1}</div>
+            <div class="col-md-2">{2}</div>
+        </div>
     </script>
 </head>
 <body>
@@ -160,18 +172,23 @@
     <br/>
     <br/>
 
-    <div>
-        <div class="panel panel-default">
-            <div class="panel-heading">Possible Suspect Cards</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div id="results"></div>
-                </div>
-            </div>
+    <div class="panel panel-info">
+        <div class="panel-heading">Possible Suspect Cards</div>
+        <div class="panel-body">
+            <div id="results"></div>
         </div>
     </div>
 
-    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="fifty-fifty" hidden>
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <strong>Warning!</strong> 50-50
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -184,6 +201,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="accusation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
