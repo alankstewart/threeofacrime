@@ -6,19 +6,15 @@ import alankstewart.threeofacrime.model.ThreeOfACrime;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonStructure;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collector;
-
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 /**
  * Created by alanstewart on 4/03/15.
@@ -46,28 +42,13 @@ public class GameServlet extends HttpServlet {
 
         final ThreeOfACrime threeOfACrime = getGame(req.getSession());
         threeOfACrime.matchSuspects(suspectCard, matches);
-        final List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-        final Set<Suspect> uniqueSuspects = suspectCards.stream().flatMap(s -> s.getSuspects().stream()).collect(toSet());
-        final List<Suspect> innocentSuspects = Arrays.stream(Suspect.values())
-                .collect(toList())
+        Json.createWriter(resp.getOutputStream()).write(threeOfACrime.getSuspectCards()
                 .stream()
-                .filter(s -> !uniqueSuspects.contains(s))
-                .collect(toList());
-
-        Json.createWriter(resp.getOutputStream()).write(Json.createObjectBuilder()
-                .add("suspectCards", suspectCards.stream().map(SuspectCard::toJson)
-                        .collect(Collector.of(Json::createArrayBuilder,
-                                JsonArrayBuilder::add, (left, right) -> {
-                                    left.add(right);
-                                    return left;
-                                })).build())
-                .add("innocentSuspects", innocentSuspects.stream().map(Suspect::name)
-                        .collect(Collector.of(Json::createArrayBuilder,
-                                JsonArrayBuilder::add, (left, right) -> {
-                                    left.add(right);
-                                    return left;
-                                })).build())
-                .build());
+                .map(s -> toJson(s.getSuspects()))
+                .collect(Collector.of(Json::createArrayBuilder, JsonArrayBuilder::add, (left, right) -> {
+                    left.add(right);
+                    return left;
+                })).build());
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
@@ -81,5 +62,13 @@ public class GameServlet extends HttpServlet {
             session.setAttribute(KEY, threeOfACrime);
         }
         return threeOfACrime;
+    }
+
+    private JsonStructure toJson(final List<Suspect> suspects) {
+        return Json.createArrayBuilder()
+                .add(suspects.get(0).getDisplayName())
+                .add(suspects.get(1).getDisplayName())
+                .add(suspects.get(2).getDisplayName())
+                .build();
     }
 }

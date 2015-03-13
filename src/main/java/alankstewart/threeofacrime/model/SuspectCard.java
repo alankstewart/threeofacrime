@@ -1,7 +1,5 @@
 package alankstewart.threeofacrime.model;
 
-import javax.json.Json;
-import javax.json.JsonStructure;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -64,13 +62,5 @@ public final class SuspectCard implements Iterable<Suspect> {
     @Override
     public String toString() {
         return suspects.stream().map(Object::toString).collect(joining(", "));
-    }
-
-    public JsonStructure toJson() {
-        return Json.createArrayBuilder()
-                .add(suspects.get(0).getDisplayName())
-                .add(suspects.get(1).getDisplayName())
-                .add(suspects.get(2).getDisplayName())
-                .build();
     }
 }

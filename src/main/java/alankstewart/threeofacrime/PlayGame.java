@@ -19,7 +19,7 @@ public final class PlayGame {
 
             final String[] tokens = line.split(",");
             if (tokens.length == 4) {
-                int matches;
+                final int matches;
                 try {
                     matches = Integer.parseInt(tokens[3]);
                 } catch (final NumberFormatException e) {

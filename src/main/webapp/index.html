@@ -11,8 +11,6 @@
         }
     </style>
     <script type="text/javascript">
-        var innocentSuspects;
-
         $(document).ready(function () {
             $("#suspects").change(function () {
                 checkFormElements();
@@ -49,22 +47,18 @@
 
         function displaySuspects(data, status, jqXHR) {
             clearResults();
-            var suspectCards = data.suspectCards;
             var suspectsTemplate = $("#suspectsTemplate").html();
-            $.each(suspectCards, function (index) {
-                var suspectCard = suspectCards[index];
+            $.each(data, function (index) {
+                var suspectCard = data[index];
                 $("#results").append(suspectsTemplate.format(suspectCard[0], suspectCard[1], suspectCard[2]));
             });
 
             $("#clear").click();
 
-            innocentSuspects = data.innocentSuspects;
-            disableInnocentSuspects();
-
-            switch (suspectCards.length) {
+            switch (data.length) {
                 case 1:
                     $("#fifty-fifty").attr("hidden", true);
-                    var suspectCard = suspectCards[0];
+                    var suspectCard = data[0];
                     $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
                     $("#accusation").modal("show").on("click", "#newGame", function (e) {
                         startNewGame();
@@ -91,16 +85,6 @@
                     $(this).removeAttr("disabled");
                 });
             }
-            disableInnocentSuspects();
-        }
-
-        function disableInnocentSuspects() {
-            if (innocentSuspects != null) {
-                $.each(innocentSuspects, function (index) {
-                    console.log(innocentSuspects[index]);
-                    $("#suspects :checkbox[value='" + innocentSuspects[index] + "']").attr("disabled", true).parent().css("color", "#d3d3d3");
-                });
-            }
         }
 
         function clearResults() {
@@ -109,7 +93,6 @@
         }
 
         function startNewGame() {
-            innocentSuspects = null;
             $.get("/play");
             $("#clear").click();
             clearResults();
