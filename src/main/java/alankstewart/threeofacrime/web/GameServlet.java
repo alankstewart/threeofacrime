@@ -47,7 +47,6 @@ public class GameServlet extends HttpServlet {
         final ThreeOfACrime threeOfACrime = getGame(req.getSession());
         threeOfACrime.matchSuspects(suspectCard, matches);
         final List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
-
         final Set<Suspect> uniqueSuspects = suspectCards.stream().flatMap(s -> s.getSuspects().stream()).collect(toSet());
         final List<Suspect> innocentSuspects = Arrays.stream(Suspect.values())
                 .collect(toList())
