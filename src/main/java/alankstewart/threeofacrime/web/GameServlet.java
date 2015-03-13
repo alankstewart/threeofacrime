@@ -54,9 +54,6 @@ public class GameServlet extends HttpServlet {
                 .filter(s -> !uniqueSuspects.contains(s))
                 .collect(toList());
 
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-
         Json.createWriter(resp.getOutputStream()).write(Json.createObjectBuilder()
                 .add("suspectCards", suspectCards.stream().map(SuspectCard::toJson)
                         .collect(Collector.of(Json::createArrayBuilder,
@@ -71,6 +68,9 @@ public class GameServlet extends HttpServlet {
                                     return left;
                                 })).build())
                 .build());
+
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
         resp.getOutputStream().flush();
     }
 
