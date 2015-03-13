@@ -25,11 +25,11 @@ import static java.util.stream.Collectors.toSet;
  */
 public class GameServlet extends HttpServlet {
 
-    private static final String SESSION_KEY = "game";
+    private static final String KEY = "game";
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().removeAttribute(SESSION_KEY);
+        req.getSession().removeAttribute(KEY);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class GameServlet extends HttpServlet {
         final List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
 
         final Set<Suspect> uniqueSuspects = suspectCards.stream().flatMap(s -> s.getSuspects().stream()).collect(toSet());
-        final List<Suspect> innocentSuspects = Arrays.stream(Suspect.values()).collect(toList())
+        final List<Suspect> innocentSuspects = Arrays.stream(Suspect.values())
+                .collect(toList())
                 .stream()
                 .filter(s -> !uniqueSuspects.contains(s))
                 .collect(toList());
@@ -75,10 +76,10 @@ public class GameServlet extends HttpServlet {
     }
 
     private ThreeOfACrime getGame(final HttpSession session) {
-        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(SESSION_KEY);
+        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(KEY);
         if (threeOfACrime == null) {
             threeOfACrime = new ThreeOfACrime();
-            session.setAttribute(SESSION_KEY, threeOfACrime);
+            session.setAttribute(KEY, threeOfACrime);
         }
         return threeOfACrime;
     }
