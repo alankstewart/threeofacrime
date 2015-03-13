@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -24,24 +25,26 @@ import static java.util.stream.Collectors.toSet;
  */
 public class GameServlet extends HttpServlet {
 
-    private ThreeOfACrime threeOfACrime;
-
-    @Override
-    public void init() throws ServletException {
-        threeOfACrime = new ThreeOfACrime();
-    }
+    private static final String SESSION_KEY = "game";
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        init();
+        req.getSession().removeAttribute(SESSION_KEY);
     }
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         final String[] selectedSuspects = req.getParameterValues("selectedSuspects[]");
         final SuspectCard suspectCard = SuspectCard.of(selectedSuspects[0], selectedSuspects[1], selectedSuspects[2]);
-        final int matches = Integer.parseInt(req.getParameter("matches"));
 
+        final int matches;
+        try {
+            matches = Integer.parseInt(req.getParameter("matches"));
+        } catch (final NumberFormatException e) {
+            throw new ServletException(e);
+        }
+
+        final ThreeOfACrime threeOfACrime = getGame(req.getSession());
         threeOfACrime.matchSuspects(suspectCard, matches);
         final List<SuspectCard> suspectCards = threeOfACrime.getSuspectCards();
 
@@ -69,5 +72,14 @@ public class GameServlet extends HttpServlet {
                                 })).build())
                 .build());
         resp.getOutputStream().flush();
+    }
+
+    private ThreeOfACrime getGame(final HttpSession session) {
+        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(SESSION_KEY);
+        if (threeOfACrime == null) {
+            threeOfACrime = new ThreeOfACrime();
+            session.setAttribute(SESSION_KEY, threeOfACrime);
+        }
+        return threeOfACrime;
     }
 }
