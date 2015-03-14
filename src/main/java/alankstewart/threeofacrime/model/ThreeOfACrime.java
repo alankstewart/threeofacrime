@@ -2,8 +2,10 @@ package alankstewart.threeofacrime.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -12,17 +14,19 @@ import static java.util.stream.Collectors.toList;
 public final class ThreeOfACrime implements Iterable<SuspectCard> {
 
     private final List<SuspectCard> suspectCards = new ArrayList<>();
-    private final List<SuspectCard> excludedSuspectCards;
+    private final List<SuspectCard> suspectCardsWon = new ArrayList<>();
+    private final Set<SuspectCard> suspectCardsPlayed = new HashSet<>();
 
     public ThreeOfACrime() {
-        excludedSuspectCards = new ArrayList<>();
+        suspectCardsWon.clear();
         startNewRound();
     }
 
     public void startNewRound() {
         suspectCards.clear();
         suspectCards.addAll(StreamSupport.stream(spliterator(), false).collect(toList()));
-        suspectCards.removeAll(excludedSuspectCards);
+        suspectCards.removeAll(suspectCardsWon);
+        suspectCardsPlayed.clear();
     }
 
     @Override
@@ -35,16 +39,17 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
     }
 
     public void matchSuspects(final SuspectCard suspectCard, final int matches) {
-        if (matches < 0 || matches > 2) {
+        if (matches < 0 || matches > 2 || suspectCardsPlayed.contains(suspectCard) || suspectCardsWon.contains(suspectCard)) {
             return;
         }
+        suspectCardsPlayed.add(suspectCard);
         suspectCards.retainAll(suspectCards
                 .stream()
                 .filter(s -> Stream.concat(s.getSuspects().stream(),
                         suspectCard.getSuspects().stream()).distinct().count() == 6 - matches)
                 .collect(toList()));
         if (suspectCards.size() == 1) {
-            excludedSuspectCards.add(suspectCards.get(0));
+            suspectCardsWon.add(suspectCards.get(0));
         }
     }
 
