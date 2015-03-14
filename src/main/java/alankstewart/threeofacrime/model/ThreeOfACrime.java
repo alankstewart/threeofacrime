@@ -38,12 +38,11 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
         if (matches < 0 || matches > 2) {
             return;
         }
-        final List<SuspectCard> matchedSuspects = suspectCards
+        suspectCards.retainAll(suspectCards
                 .stream()
                 .filter(s -> Stream.concat(s.getSuspects().stream(),
                         suspectCard.getSuspects().stream()).distinct().count() == 6 - matches)
-                .collect(toList());
-            suspectCards.retainAll(matchedSuspects);
+                .collect(toList()));
         if (suspectCards.size() == 1) {
             excludedSuspectCards.add(suspectCards.get(0));
         }
