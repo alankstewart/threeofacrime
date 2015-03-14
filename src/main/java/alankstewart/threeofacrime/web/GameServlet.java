@@ -21,11 +21,17 @@ import java.util.stream.Collector;
  */
 public class GameServlet extends HttpServlet {
 
-    private static final String KEY = "game";
+    private static final String GAME_KEY = "game";
+    private static final String NEW_ROUND_KEY = "startNewRound";
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().removeAttribute(KEY);
+        final HttpSession session = req.getSession();
+        if (Boolean.parseBoolean(req.getParameter(NEW_ROUND_KEY))) {
+            session.setAttribute(NEW_ROUND_KEY, Boolean.TRUE);
+        } else {
+            session.removeAttribute(GAME_KEY);
+        }
     }
 
     @Override
@@ -56,10 +62,14 @@ public class GameServlet extends HttpServlet {
     }
 
     private ThreeOfACrime getGame(final HttpSession session) {
-        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(KEY);
+        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(GAME_KEY);
         if (threeOfACrime == null) {
             threeOfACrime = new ThreeOfACrime();
-            session.setAttribute(KEY, threeOfACrime);
+            session.setAttribute(GAME_KEY, threeOfACrime);
+        }
+        if (session.getAttribute(NEW_ROUND_KEY) != null) {
+            threeOfACrime.startNewRound();
+            session.removeAttribute(NEW_ROUND_KEY);
         }
         return threeOfACrime;
     }

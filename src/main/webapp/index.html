@@ -15,24 +15,31 @@
             $("#suspects").change(function () {
                 checkFormElements();
             });
+
             $("#matches").change(function () {
                 checkFormElements();
             });
+
             $("#clear").click(function () {
                 $("#suspects :checked").each(function () {
                     $(this).removeAttr("checked");
                 });
                 checkFormElements();
             });
-            $("#resetGame").on("click", function (e) {
+
+            $("#startNewGame").on("click", function (e) {
+                $("#confirm").unbind("click");
                 $("#confirm").modal({backdrop: "static", keyboard: false}).on("click", "#reset", function (e) {
-                    startNewGame();
+                    $.get("/play/");
+                    $("#clear").click();
+                    clearResults();
                 });
             });
+
             $("#submit").click(function () {
                 $.ajax({
                     type: "POST",
-                    url: "/play",
+                    url: "/play/",
                     data: {
                         "selectedSuspects": $("#suspects :checked").map(function () {
                             return $(this).val();
@@ -60,8 +67,15 @@
                     $("#fifty-fifty").attr("hidden", true);
                     var suspectCard = data[0];
                     $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
-                    $("#accusation").modal("show").on("click", "#newGame", function (e) {
-                        startNewGame();
+                    $("#accusation").unbind("click");
+                    $("#accusation").modal("show").on("click", "#startNewRound", function (e) {
+                        $.ajax({
+                            type: "GET",
+                            url: "/play/",
+                            data: {"startNewRound": true}
+                        });
+                        $("#clear").click();
+                        clearResults();
                     });
                     break;
                 case 2:
@@ -90,12 +104,6 @@
         function clearResults() {
             $("#results").empty();
             $("#suspects :checkbox").removeAttr("hidden disabled").parent().css("color", "");
-        }
-
-        function startNewGame() {
-            $.get("/play");
-            $("#clear").click();
-            clearResults();
             $("#fifty-fifty").attr("hidden", true);
         }
 
@@ -149,9 +157,9 @@
     </div>
     <br/>
     <br/>
-    <button id="submit" type="button" class="btn btn-primary" disabled>Submit</button>
-    <button id="clear" type="button" class="btn btn-success">Clear</button>
-    <button id="resetGame" type="button" class="btn btn-warning">Reset Game</button>
+    <button id="submit" type="button" class="btn btn-primary" disabled>Match Suspects</button>
+    <button id="clear" type="button" class="btn btn-success">Clear Selections</button>
+    <button id="startNewGame" type="button" class="btn btn-warning">Start New Game</button>
     <br/>
     <br/>
 
@@ -179,7 +187,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">Reset</button>
+                    <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
                 </div>
             </div>
         </div>
@@ -196,7 +204,7 @@
                     <div id="criminals" class="alert alert-success" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button id="newGame" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="startNewRound" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

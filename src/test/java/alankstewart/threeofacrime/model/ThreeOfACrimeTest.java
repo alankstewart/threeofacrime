@@ -47,7 +47,8 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldPlayGame() {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
@@ -58,5 +59,33 @@ public class ThreeOfACrimeTest {
         assertEquals(1, threeOfACrime.getSuspectCards().size());
         assertEquals(SuspectCard.of(LOOSE_EYE_LENNY, LOUIE_ST_LOUIS, PENCIL_TOP), threeOfACrime.getSuspectCards().get(0));
         threeOfACrime.printSuspectCards();
+
+        threeOfACrime.startNewRound();
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
+        assertEquals(17, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
+        assertEquals(8, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, PENCIL_TOP), 2);
+        assertEquals(1, threeOfACrime.getSuspectCards().size());
+        assertEquals(SuspectCard.of(HUMPTY_BUMPTY, LOOSE_EYE_LENNY, LOUIE_ST_LOUIS), threeOfACrime.getSuspectCards().get(0));
+        threeOfACrime.printSuspectCards();
+
+        threeOfACrime.startNewRound();
+        threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
+        assertEquals(16, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
+        assertEquals(7, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SuspectCard.of(HUMPTY_BUMPTY, KID_CASSIDY, PENCIL_TOP), 2);
+        assertEquals(2, threeOfACrime.getSuspectCards().size());
+        threeOfACrime.matchSuspects(SuspectCard.of(LOUIE_ST_LOUIS, KID_CASSIDY, PENCIL_TOP), 2);
+        assertEquals(1, threeOfACrime.getSuspectCards().size());
+        assertEquals(SuspectCard.of(HUMPTY_BUMPTY, KID_CASSIDY, LOUIE_ST_LOUIS), threeOfACrime.getSuspectCards().get(0));
+        threeOfACrime.printSuspectCards();
+
+        threeOfACrime.startNewRound();
+        assertEquals(32, threeOfACrime.getSuspectCards().size());
+
+        threeOfACrime = new ThreeOfACrime();
+        assertEquals(35, threeOfACrime.getSuspectCards().size());
     }
 }

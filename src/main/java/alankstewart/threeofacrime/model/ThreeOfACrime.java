@@ -1,5 +1,6 @@
 package alankstewart.threeofacrime.model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -10,10 +11,18 @@ import static java.util.stream.Collectors.toList;
 
 public final class ThreeOfACrime implements Iterable<SuspectCard> {
 
-    private final List<SuspectCard> suspectCards;
+    private final List<SuspectCard> suspectCards = new ArrayList<>();
+    private final List<SuspectCard> excludedSuspectCards;
 
     public ThreeOfACrime() {
-        suspectCards = StreamSupport.stream(spliterator(), false).collect(toList());
+        excludedSuspectCards = new ArrayList<>();
+        startNewRound();
+    }
+
+    public void startNewRound() {
+        suspectCards.clear();
+        suspectCards.addAll(StreamSupport.stream(spliterator(), false).collect(toList()));
+        suspectCards.removeAll(excludedSuspectCards);
     }
 
     @Override
@@ -34,8 +43,9 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
                 .filter(s -> Stream.concat(s.getSuspects().stream(),
                         suspectCard.getSuspects().stream()).distinct().count() == 6 - matches)
                 .collect(toList());
-        if (!matchedSuspects.isEmpty()) {
             suspectCards.retainAll(matchedSuspects);
+        if (suspectCards.size() == 1) {
+            excludedSuspectCards.add(suspectCards.get(0));
         }
     }
 
