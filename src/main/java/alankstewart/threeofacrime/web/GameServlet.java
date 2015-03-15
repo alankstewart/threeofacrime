@@ -37,15 +37,9 @@ public class GameServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         final String[] selectedSuspects = req.getParameterValues("selectedSuspects[]");
+        final int matches = getAsInteger(req.getParameter("matches"));
+
         final SuspectCard suspectCard = SuspectCard.of(selectedSuspects[0], selectedSuspects[1], selectedSuspects[2]);
-
-        final int matches;
-        try {
-            matches = Integer.parseInt(req.getParameter("matches"));
-        } catch (final NumberFormatException e) {
-            throw new ServletException(e);
-        }
-
         final ThreeOfACrime threeOfACrime = getGame(req.getSession());
         threeOfACrime.matchSuspects(suspectCard, matches);
         Json.createWriter(resp.getOutputStream()).write(threeOfACrime.getSuspectCards()
@@ -59,6 +53,14 @@ public class GameServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getOutputStream().flush();
+    }
+
+    private int getAsInteger(String str) throws ServletException {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            throw new ServletException("Failed to parse string as integer '" + str + "'");
+        }
     }
 
     private ThreeOfACrime getGame(final HttpSession session) {
