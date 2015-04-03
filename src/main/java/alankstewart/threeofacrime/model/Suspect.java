@@ -14,7 +14,7 @@ public enum Suspect {
 
     private final String displayName;
 
-    private Suspect(final String displayName) {
+    Suspect(final String displayName) {
         this.displayName = displayName;
     }
 
