@@ -66,7 +66,7 @@
 
             switch (data.length) {
                 case 1:
-                    $("#fifty-fifty").attr("hidden", true);
+                    $("#fifty-fifty").prop("hidden", true);
                     var suspectCard = data[0];
                     $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
                     $("#accusation").off("click");
@@ -90,13 +90,13 @@
         function checkFormElements() {
             if ($("#suspects :checked").length == 3) {
                 $("#suspects :not(:checked)").each(function () {
-                    $(this).attr("disabled", true);
+                    $(this).prop("disabled", true);
                 });
                 if ($("#matches :checked").length > 0) {
                     $("#submit").prop("disabled", false);
                 }
             } else {
-                $("#submit").attr("disabled", true);
+                $("#submit").prop("disabled", true);
                 $("#suspects :not(:checked)").each(function () {
                     $(this).prop("disabled", false);
                 });
@@ -106,7 +106,7 @@
         function clearResults() {
             $("#results").empty();
             $("#suspects :checkbox").prop("hidden disabled", false).parent().css("color", "");
-            $("#fifty-fifty").attr("hidden", true);
+            $("#fifty-fifty").prop("hidden", true);
         }
 
         String.prototype.format = function () {
