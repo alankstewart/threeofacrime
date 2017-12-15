@@ -12,6 +12,6 @@ public final class MathUtil {
     }
 
     public static int factorial(final int n) {
-        return IntStream.rangeClosed(1, n).reduce((x, y) -> x * y).getAsInt();
+        return IntStream.rangeClosed(1, n).reduce((x, y) -> x * y).orElse(1);
     }
 }

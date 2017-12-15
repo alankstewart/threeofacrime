@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
     <title>Three Of A Crime</title>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <style type="text/css">
         body {
             margin-top: 20px;
@@ -22,13 +24,13 @@
 
             $("#clear").click(function () {
                 $("#suspects :checked").each(function () {
-                    $(this).removeAttr("checked");
+                    $(this).prop("checked", false);
                 });
                 checkFormElements();
             });
 
             $("#startNewGame").on("click", function (e) {
-                $("#confirm").unbind("click");
+                $("#confirm").off("click");
                 $("#confirm").modal({backdrop: "static", keyboard: false}).on("click", "#reset", function (e) {
                     $.get("/play/");
                     $("#clear").click();
@@ -67,7 +69,7 @@
                     $("#fifty-fifty").attr("hidden", true);
                     var suspectCard = data[0];
                     $("#criminals").text(suspectCard[0] + ", " + suspectCard[1] + ", " + suspectCard[2]);
-                    $("#accusation").unbind("click");
+                    $("#accusation").off("click");
                     $("#accusation").modal("show").on("click", "#startNewRound", function (e) {
                         $.ajax({
                             type: "GET",
@@ -79,7 +81,7 @@
                     });
                     break;
                 case 2:
-                    $("#fifty-fifty").removeAttr("hidden").show();
+                    $("#fifty-fifty").prop("hidden", false).show();
                     break;
                 default:
             }
@@ -91,19 +93,19 @@
                     $(this).attr("disabled", true);
                 });
                 if ($("#matches :checked").length > 0) {
-                    $("#submit").removeAttr("disabled");
+                    $("#submit").prop("disabled", false);
                 }
             } else {
                 $("#submit").attr("disabled", true);
                 $("#suspects :not(:checked)").each(function () {
-                    $(this).removeAttr("disabled");
+                    $(this).prop("disabled", false);
                 });
             }
         }
 
         function clearResults() {
             $("#results").empty();
-            $("#suspects :checkbox").removeAttr("hidden disabled").parent().css("color", "");
+            $("#suspects :checkbox").prop("hidden disabled", false).parent().css("color", "");
             $("#fifty-fifty").attr("hidden", true);
         }
 
