@@ -24,7 +24,7 @@ public enum Suspect {
 
     public static Suspect from(final String suspect) {
         return Arrays.stream(values())
-                .filter(s -> s.name().equalsIgnoreCase(suspect) || s.displayName.equalsIgnoreCase(suspect))
+                .filter(s -> s.name().equalsIgnoreCase(suspect.trim()) || s.displayName.equalsIgnoreCase(suspect.trim()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Unknown suspect '%s'", suspect)));
     }
