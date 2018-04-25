@@ -4,18 +4,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static alankstewart.threeofacrime.model.Suspect.HUMPTY_BUMPTY;
-import static alankstewart.threeofacrime.model.Suspect.LOOSE_EYE_LENNY;
-import static alankstewart.threeofacrime.model.Suspect.LOUIE_ST_LOUIS;
-import static alankstewart.threeofacrime.model.Suspect.NO_NECK_NICK;
-import static alankstewart.threeofacrime.model.Suspect.PENCIL_TOP;
+import static alankstewart.threeofacrime.model.Suspect.*;
 import static alankstewart.threeofacrime.model.SuspectCard.of;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SuspectCardTest {
 
