@@ -34,14 +34,14 @@ public class SuspectCardTest {
 
     @Test
     public void shouldCreateSuspectCardWithUniqueSuspects() {
-        final SuspectCard suspectCard = of(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
+        final var suspectCard = of(NO_NECK_NICK, HUMPTY_BUMPTY, PENCIL_TOP);
         assertThat(suspectCard, is(notNullValue()));
         assertEquals(3, suspectCard.getSuspects().size());
     }
 
     @Test
     public void shouldConvertStringsToSuspect() {
-        SuspectCard suspectCard = of("HUMPTY BUMPTY", "LOOSE-EYE LENNY", "NO NECK NICK");
+        var suspectCard = of("HUMPTY BUMPTY", "LOOSE-EYE LENNY", "NO NECK NICK");
         assertThat(suspectCard, is(notNullValue()));
         suspectCard = of("humpty bumpty", "LOOSE-EYE lenny", "No Neck Nick");
         assertThat(suspectCard, is(notNullValue()));
@@ -49,7 +49,7 @@ public class SuspectCardTest {
 
     @Test
     public void shouldNotConvertStringsToSuspect() {
-        final String malformedSuspect = "HUMPTY BUMPTY1";
+        final var malformedSuspect = "HUMPTY BUMPTY1";
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Unknown suspect '" + malformedSuspect + "'");
         of(malformedSuspect, "LOOSE-EYE LENNY", "NO NECK NICK");

@@ -26,7 +26,7 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        final HttpSession session = req.getSession();
+        final var session = req.getSession();
         if (Boolean.parseBoolean(req.getParameter(NEW_ROUND_KEY))) {
             session.setAttribute(NEW_ROUND_KEY, Boolean.TRUE);
         } else {
@@ -36,11 +36,11 @@ public class GameServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
-        final String[] selectedSuspects = req.getParameterValues("selectedSuspects[]");
-        final int matches = getAsInteger(req.getParameter("matches"));
+        final var selectedSuspects = req.getParameterValues("selectedSuspects[]");
+        final var matches = getAsInteger(req.getParameter("matches"));
 
-        final SuspectCard suspectCard = SuspectCard.of(selectedSuspects[0], selectedSuspects[1], selectedSuspects[2]);
-        final ThreeOfACrime threeOfACrime = getGame(req.getSession());
+        final var suspectCard = SuspectCard.of(selectedSuspects[0], selectedSuspects[1], selectedSuspects[2]);
+        final var threeOfACrime = getGame(req.getSession());
         threeOfACrime.matchSuspects(suspectCard, matches);
         Json.createWriter(resp.getOutputStream()).write(threeOfACrime.getSuspectCards()
                 .stream()
@@ -64,7 +64,7 @@ public class GameServlet extends HttpServlet {
     }
 
     private ThreeOfACrime getGame(final HttpSession session) {
-        ThreeOfACrime threeOfACrime = (ThreeOfACrime) session.getAttribute(GAME_KEY);
+        var threeOfACrime = (ThreeOfACrime) session.getAttribute(GAME_KEY);
         if (threeOfACrime == null) {
             threeOfACrime = new ThreeOfACrime();
             session.setAttribute(GAME_KEY, threeOfACrime);

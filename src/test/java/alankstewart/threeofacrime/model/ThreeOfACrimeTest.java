@@ -18,20 +18,20 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldGenerateRandomSuspectCards() {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final var threeOfACrime = new ThreeOfACrime();
         assertEquals(35, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchZeroSuspects() {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 0);
         assertEquals(4, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchOneSuspect() {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
@@ -40,14 +40,14 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldMatchTwoSuspects() {
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        final var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 2);
         assertEquals(12, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldPlayGame() {
-        ThreeOfACrime threeOfACrime = new ThreeOfACrime();
+        var threeOfACrime = new ThreeOfACrime();
 
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());

@@ -50,7 +50,7 @@ public final class SuspectCard implements Iterable<Suspect> {
         if (this == obj) {
             return true;
         }
-        final SuspectCard that = (SuspectCard) obj;
+        final var that = (SuspectCard) obj;
         return suspects.containsAll(that.getSuspects());
     }
 

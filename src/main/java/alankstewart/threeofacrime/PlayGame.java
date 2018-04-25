@@ -9,15 +9,15 @@ public final class PlayGame {
 
     public static void main(final String[] args) {
         System.out.println("Please enter three unique suspects and the number of matches separated by commas or 'q' to quit");
-        final ThreeOfACrime threeOfACrime = new ThreeOfACrime();
-        final Scanner console = new Scanner(System.in);
+        final var threeOfACrime = new ThreeOfACrime();
+        final var console = new Scanner(System.in);
         while (console.hasNextLine()) {
-            final String line = console.nextLine();
+            final var line = console.nextLine();
             if (line.equalsIgnoreCase("q")) {
                 break;
             }
 
-            final String[] tokens = line.split(",");
+            final var tokens = line.split(",");
             if (tokens.length == 4) {
                 final int matches;
                 try {
