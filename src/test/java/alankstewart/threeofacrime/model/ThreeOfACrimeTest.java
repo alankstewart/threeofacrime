@@ -2,7 +2,13 @@ package alankstewart.threeofacrime.model;
 
 import org.junit.Test;
 
-import static alankstewart.threeofacrime.model.Suspect.*;
+import static alankstewart.threeofacrime.model.Suspect.HUMPTY_BUMPTY;
+import static alankstewart.threeofacrime.model.Suspect.JONNY_CORTEX;
+import static alankstewart.threeofacrime.model.Suspect.KID_CASSIDY;
+import static alankstewart.threeofacrime.model.Suspect.LOOSE_EYE_LENNY;
+import static alankstewart.threeofacrime.model.Suspect.LOUIE_ST_LOUIS;
+import static alankstewart.threeofacrime.model.Suspect.NO_NECK_NICK;
+import static alankstewart.threeofacrime.model.Suspect.PENCIL_TOP;
 import static org.junit.Assert.assertEquals;
 
 public class ThreeOfACrimeTest {
@@ -12,20 +18,20 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldGenerateRandomSuspectCards() {
-        final var threeOfACrime = new ThreeOfACrime();
+        var threeOfACrime = new ThreeOfACrime();
         assertEquals(35, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchZeroSuspects() {
-        final var threeOfACrime = new ThreeOfACrime();
+        var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 0);
         assertEquals(4, threeOfACrime.getSuspectCards().size());
     }
 
     @Test
     public void shouldMatchOneSuspect() {
-        final var threeOfACrime = new ThreeOfACrime();
+        var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 1);
         assertEquals(18, threeOfACrime.getSuspectCards().size());
         threeOfACrime.matchSuspects(SUSPECT_CARD2, 1);
@@ -34,7 +40,7 @@ public class ThreeOfACrimeTest {
 
     @Test
     public void shouldMatchTwoSuspects() {
-        final var threeOfACrime = new ThreeOfACrime();
+        var threeOfACrime = new ThreeOfACrime();
         threeOfACrime.matchSuspects(SUSPECT_CARD1, 2);
         assertEquals(12, threeOfACrime.getSuspectCards().size());
     }

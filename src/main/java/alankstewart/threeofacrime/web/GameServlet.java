@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collector;
+
+import static java.util.stream.Collector.of;
 
 /**
  * Created by alanstewart on 4/03/15.
@@ -45,7 +46,7 @@ public class GameServlet extends HttpServlet {
         Json.createWriter(resp.getOutputStream()).write(threeOfACrime.getSuspectCards()
                 .stream()
                 .map(s -> toJson(s.getSuspects()))
-                .collect(Collector.of(Json::createArrayBuilder, JsonArrayBuilder::add, (left, right) -> {
+                .collect(of(Json::createArrayBuilder, JsonArrayBuilder::add, (left, right) -> {
                     left.add(right);
                     return left;
                 })).build());
