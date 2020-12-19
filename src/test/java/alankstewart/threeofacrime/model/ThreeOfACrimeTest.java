@@ -1,6 +1,7 @@
 package alankstewart.threeofacrime.model;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import static alankstewart.threeofacrime.model.Suspect.HUMPTY_BUMPTY;
 import static alankstewart.threeofacrime.model.Suspect.JONNY_CORTEX;
@@ -9,7 +10,8 @@ import static alankstewart.threeofacrime.model.Suspect.LOOSE_EYE_LENNY;
 import static alankstewart.threeofacrime.model.Suspect.LOUIE_ST_LOUIS;
 import static alankstewart.threeofacrime.model.Suspect.NO_NECK_NICK;
 import static alankstewart.threeofacrime.model.Suspect.PENCIL_TOP;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ThreeOfACrimeTest {
 

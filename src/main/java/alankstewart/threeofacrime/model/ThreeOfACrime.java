@@ -18,7 +18,6 @@ public final class ThreeOfACrime implements Iterable<SuspectCard> {
     private final Set<SuspectCard> suspectCardsPlayed = new HashSet<>();
 
     public ThreeOfACrime() {
-        suspectCardsWon.clear();
         startNewRound();
     }
 
