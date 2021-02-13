@@ -125,70 +125,62 @@
 <div class="container">
     <h1>Three Of A Crime</h1>
     <h4>Suspects</h4>
-
     <div id="suspects" class="btn-group" role="group">
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="HUMPTY_BUMPTY"/>HUMPTY BUMPTY</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="JONNY_CORTEX"/>JONNY CORTEX</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="KID_CASSIDY"/>KID CASSIDY</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="LOOSE_EYE_LENNY"/>LOOSE-EYE LENNY</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="LOUIE_ST_LOUIS"/>LOUIE ST. LOUIS</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="NO_NECK_NICK"/>NO NECK NICK</label>
-        <label label-default="label-default" class="checkbox-inline">
-            <input type="checkbox" value="PENCIL_TOP"/>PENCIL TOP</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="HUMPTY_BUMPTY">HUMPTY BUMPTY</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="JONNY_CORTEX">JONNY CORTEX</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="KID_CASSIDY">KID CASSIDY</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="LOOSE_EYE_LENNY">LOOSE-EYE LENNY</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="LOUIE_ST_LOUIS">LOUIE ST. LOUIS</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="NO_NECK_NICK">NO NECK NICK</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="checkbox" value="PENCIL_TOP">PENCIL TOP</label>
     </div>
-    <br/>
+    <br>
     <h4>Matches</h4>
-
     <div id="matches" class="btn-group">
-        <label label-default="label-default" class="radio-inline">
-            <input type="radio" name="match" value="0"/>0</label>
-        <label label-default="label-default" class="radio-inline">
-            <input type="radio" name="match" value="1"/>1</label>
-        <label label-default="label-default" class="radio-inline">
-            <input type="radio" name="match" value="2"/>2</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="radio" name="match" value="0">0</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="radio" name="match" value="1">1</label>
+        <label label-default="label-default" class="form-check-inline">
+            <input type="radio" name="match" value="2">2</label>
     </div>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <button id="submit" type="button" class="btn btn-primary" disabled>Match Suspects</button>
     <button id="clear" type="button" class="btn btn-success">Clear Selections</button>
     <button id="startNewGame" type="button" class="btn btn-warning">Start New Game</button>
-    <br/>
-    <br/>
-
-    <div class="panel panel-info">
-        <div class="panel-heading">Possible Suspect Cards</div>
-        <div class="panel-body">
+    <br>
+    <br>
+    <div class="card text-white bg-info">
+        <div class="card-header">Possible Suspect Cards</div>
+        <div class="card-body">
             <div id="results"></div>
         </div>
     </div>
-
     <div id="fifty-fifty" class="alert alert-warning" hidden>
         <strong>Warning!</strong> 50-50
     </div>
-
-    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">Start a new game?</h3>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button id="reset" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="accusation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
+    <div class="modal fade" id="accusation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -198,7 +190,7 @@
                     <div id="criminals" class="alert alert-success" role="alert"></div>
                 </div>
                 <div class="modal-footer">
-                    <button id="startNewRound" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="startNewRound" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
